@@ -1,0 +1,28 @@
+# IntelliJ IDEA #
+.idea/
+/.idea/
+*/.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse Project files
+.classpath
+.project
+/.settings/
+.settings/
+
+# Java class files
+*.class
+
+# Generated files
+*/bin/
+*/gen/
+*/out/
+
+### user ###
+target/
+/target/
+/src/logs/
+*.zip
+sdkTest.log
