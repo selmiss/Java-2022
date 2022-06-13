@@ -15,28 +15,14 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
 public class Navigate extends AnchorPane {
-    public Navigate(int index){
+    public Navigate(){
         //基础设置
         setStyle("-fx-background-color: #FFFFFF");
-        Button button1 = null;
-        Button button2 = null;
-        Button button3 = null;
-
-        //添加导航按钮
-        if(index==1)
-            button1 = new NavigateButton("1",true);
-        else
-            button1 = new NavigateButton("1",false);
+        Button button1 = new NavigateButton("1");
         button1.setLayoutX(0);
-        if(index==2)
-            button2 = new NavigateButton("2",true);
-        else
-            button2 = new NavigateButton("2",false);
+        Button button2 = new NavigateButton("2");
         button2.setLayoutX(100);
-        if(index==3)
-            button3 = new NavigateButton("3",true);
-        else
-            button3 = new NavigateButton("3",false);
+        Button button3 = new NavigateButton("3");
         button3.setLayoutX(200);
         getChildren().add(button1);
         getChildren().add(button2);
@@ -45,7 +31,8 @@ public class Navigate extends AnchorPane {
     }
 }
 class NavigateButton extends Button{
-    public NavigateButton(String var1,boolean isActive){
+    private boolean isActive = false;
+    public NavigateButton(String var1){
         super(var1);
         //修改样式
         if(isActive)

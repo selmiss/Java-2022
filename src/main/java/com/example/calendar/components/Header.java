@@ -15,9 +15,16 @@ import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.Date;
 
-public class Header extends AnchorPane {
-    public Header(CircleButton btn){
 
+/**
+ * 顶部标题栏.
+ * <p>显示时间和一些提醒.</p>
+ * @author 郭一帆
+ * @version 1.0
+ * @since 2022.6.12
+ */
+public class Header extends AnchorPane {
+    public Header(){
         Text text1 = new Text("what's your plan today");
         text1.setX(10);
         text1.setY(20);
@@ -31,10 +38,23 @@ public class Header extends AnchorPane {
         text3.setY(70);
         text3.setFont(Font.font("Microsoft YaHei",14));
 
-        btn.setLayoutX(250);
-        btn.setLayoutY(55);
+        getChildren().addAll(text1,text2,text3);
+    }
 
-        getChildren().addAll(text1,text2,text3,btn);
+    /**
+     * 在header上添加按钮.
+     * <p>由于在不同页面上header右侧的按钮功能不同，因此每次切换页面都需要一并切换右侧的按钮.</p>
+     * @param newButton
+     */
+    public void addButton(CircleButton newButton){
+        newButton.setLayoutX(250);
+        newButton.setLayoutY(52);
+        newButton.setMinSize(25,25);
+        this.getChildren().add(newButton);
+    }
+
+    public void removeButton(CircleButton newButton){
+        this.getChildren().remove(newButton);
     }
 }
 
