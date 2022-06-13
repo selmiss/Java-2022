@@ -44,7 +44,7 @@ public class Header extends AnchorPane {
     /**
      * 在header上添加按钮.
      * <p>由于在不同页面上header右侧的按钮功能不同，因此每次切换页面都需要一并切换右侧的按钮.</p>
-     * @param newButton
+     * @param newButton 标题栏右侧按钮
      */
     public void addButton(CircleButton newButton){
         newButton.setLayoutX(250);
@@ -58,6 +58,9 @@ public class Header extends AnchorPane {
     }
 }
 
+/**
+ * 显示时间的文本
+ */
 class TimeText extends Text{
     public TimeText(){
         DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
