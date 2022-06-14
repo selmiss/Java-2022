@@ -1,6 +1,7 @@
 package com.example.calendar;
 
 import com.example.calendar.components.*;
+import com.example.calendar.components.schedule.Schedule;
 import com.example.calendar.components.todo.TodoDetail;
 import com.example.calendar.components.todo.TodoLists;
 import javafx.application.Application;
@@ -8,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -29,15 +31,17 @@ import java.io.IOException;
  */
 public class HelloApplication extends Application {
 
-    static BorderPane borderPane = new BorderPane();//最外层布局
+    BorderPane borderPane = new BorderPane();//最外层布局
 
-    static Navigate navigate = new Navigate();//底部导航栏
-    static Header header = new Header();//顶部标题栏
-    static TodoDetail todoDetail = new TodoDetail();//待办事项详细
-    static TodoLists todoLists = new TodoLists();//待办事项列表
+    Navigate navigate = new Navigate();//底部导航栏
+    Header header1 = new Header();//待办列表页面顶部标题栏
+    Header header2 = new Header();//待办详细页面顶部标题栏
+    TodoDetail todoDetail = new TodoDetail();//待办事项详细
+    TodoLists todoLists = new TodoLists();//待办事项列表
+    Schedule schedule = new Schedule();//课程表
 
-    static CircleButton addItemButton = new CircleButton("file:src/main/resources/com/example/calendar/images/addButton.png");
-    static CircleButton confirmButton = new CircleButton("file:src/main/resources/com/example/calendar/images/arrow.png");
+    CircleButton addItemButton = new CircleButton("file:src/main/resources/com/example/calendar/images/addButton.png");
+    CircleButton confirmButton = new CircleButton("file:src/main/resources/com/example/calendar/images/arrow.png");
 
     /**
      * 启动函数.
@@ -68,8 +72,9 @@ public class HelloApplication extends Application {
 
         //添加控件
         borderPane.setBottom(navigate);
-        header.addButton(addItemButton);
-        borderPane.setTop(header);
+        header1.addButton(addItemButton);
+        header2.addButton(confirmButton);
+        borderPane.setTop(header1);
         borderPane.setCenter(todoLists);
 
         //显示
@@ -82,18 +87,35 @@ public class HelloApplication extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 borderPane.setCenter(todoDetail);
-                header.removeButton(addItemButton);
-                header.addButton(confirmButton);
+                borderPane.setTop(header2);
             }
         });
         confirmButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 borderPane.setCenter(todoLists);
-                header.removeButton(confirmButton);
-                header.addButton(addItemButton);
+                borderPane.setTop(header1);
             }
         });
+        EventHandler<ActionEvent> onTodoButtonClicked = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                navigate.activate((Button) actionEvent.getSource());
+                borderPane.setCenter(todoLists);
+                borderPane.setTop(header1);
+                //header.addButton(addItemButton);
+            }
+        };
+        EventHandler<ActionEvent> onScheduleButtonClicked = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                navigate.activate((Button) actionEvent.getSource());
+                borderPane.setCenter(schedule);
+                borderPane.setTop(null);
+            }
+        };
+        navigate.addListener(onTodoButtonClicked,onScheduleButtonClicked);
+
     }
 
 

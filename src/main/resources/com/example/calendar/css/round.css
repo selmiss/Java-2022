@@ -1,0 +1,15 @@
+ .scroll-pane {
+    -fx-background-radius: 20;
+     -fx-focus-color: transparent;
+     -fx-faint-focus-color:transparent;
+}
+.scroll-pane .viewport {
+    -fx-background-radius: 20;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color:transparent;
+}
+.scroll-pane .content{
+    -fx-background-radius: 20;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color:transparent;
+}

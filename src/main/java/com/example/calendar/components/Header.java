@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -14,6 +15,7 @@ import javafx.util.Duration;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.function.Consumer;
 
 
 /**
@@ -50,16 +52,22 @@ public class Header extends AnchorPane {
         newButton.setLayoutX(250);
         newButton.setLayoutY(52);
         newButton.setMinSize(25,25);
+        this.getChildren().forEach(new Consumer<Node>() {
+            @Override
+            public void accept(Node node) {
+                if(node instanceof CircleButton)
+                    getChildren().remove(node);
+            }
+        });
         this.getChildren().add(newButton);
-    }
-
-    public void removeButton(CircleButton newButton){
-        this.getChildren().remove(newButton);
     }
 }
 
 /**
- * 显示时间的文本
+ * 显示时间的文本.
+ * @author 郭一帆
+ * @version 1.0
+ * @since 2022.6.12
  */
 class TimeText extends Text{
     public TimeText(){

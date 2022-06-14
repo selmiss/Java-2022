@@ -19,6 +19,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -184,6 +185,7 @@ public class TodoDetail extends AnchorPane {
             //打开新的窗口选择时间
             Stage timeStage = new Stage();
             timeStage.initStyle(StageStyle.UNDECORATED);
+            timeStage.initModality(Modality.APPLICATION_MODAL);
             Scene timeScene = new Scene(timePicker);
             timeStage.setScene(timeScene);
             timeStage.show();
