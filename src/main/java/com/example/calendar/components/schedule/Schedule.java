@@ -65,7 +65,7 @@ public class Schedule extends AnchorPane {
         weekIndexLabel.setOnMouseClicked(new WeekEventHandler());
 
         //日期栏
-        hBox.setLayoutX(4);
+        hBox.setLayoutX(10);
         hBox.setLayoutY(60);
         hBox.setPrefHeight(30);
         hBox.setPrefWidth(280);
@@ -84,18 +84,22 @@ public class Schedule extends AnchorPane {
 
         //滚动面板样式
         scrollPane.setContent(gridPane);
-        scrollPane.setLayoutX(4);
+        scrollPane.setLayoutX(10);
         scrollPane.setLayoutY(90);
         scrollPane.setPrefHeight(400);
-        scrollPane.setPrefWidth(292);
+        scrollPane.setPrefWidth(280);
         scrollPane.setEffect(new InnerShadow(1,Color.rgb(0,0,0,0.3)));
-        scrollPane.getStylesheets().add("file:src/main/resources/com/example/calendar/css/round.css");
+        scrollPane.getStylesheets().add("file:src/main/resources/com/example/calendar/css/scroll.css");
+        scrollPane.setBackground(new Background(new BackgroundFill(Color.web("#FBFFFF"), CornerRadii.EMPTY, Insets.EMPTY)));
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
 
         //网格面板样式
         for(int i=0;i<14;i++)
         {
             DateLabel dateLabel = new DateLabel(String.valueOf(i+1));
-            dateLabel.setPrefWidth(30);
+            dateLabel.setPrefWidth(29);
             //dateLabel.setEffect(new InnerShadow(5,0,-1,Color.rgb(0,0,0,0.3)));
             gridPane.add(dateLabel,0,i,1,1);
         }

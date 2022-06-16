@@ -1,6 +1,8 @@
 package com.example.calendar;
 
 import com.example.calendar.components.*;
+import com.example.calendar.components.notes.NoteDetail;
+import com.example.calendar.components.notes.NoteList;
 import com.example.calendar.components.schedule.Schedule;
 import com.example.calendar.components.todo.TodoDetail;
 import com.example.calendar.components.todo.TodoLists;
@@ -34,14 +36,20 @@ public class HelloApplication extends Application {
     BorderPane borderPane = new BorderPane();//最外层布局
 
     Navigate navigate = new Navigate();//底部导航栏
-    Header header1 = new Header();//待办列表页面顶部标题栏
-    Header header2 = new Header();//待办详细页面顶部标题栏
+    Header header1 = new Header("what's your plan today","来看看有什么需要做的");//待办列表页面顶部标题栏
+    Header header2 = new Header("what's your plan today","来看看有什么需要做的");//待办详细页面顶部标题栏
+    Header header3 = new Header("you can take notes here","来记录此刻的灵感吧");//笔记列表页面顶部标题栏
+    Header header4 = new Header("you can take notes here","来记录此刻的灵感吧");//笔记详细页面顶部标题栏
     TodoDetail todoDetail = new TodoDetail();//待办事项详细
     TodoLists todoLists = new TodoLists();//待办事项列表
     Schedule schedule = new Schedule();//课程表
+    NoteList noteList = new NoteList();//笔记列表
+    NoteDetail noteDetail = new NoteDetail();//笔记详细
 
     CircleButton addItemButton = new CircleButton("file:src/main/resources/com/example/calendar/images/addButton.png");
     CircleButton confirmButton = new CircleButton("file:src/main/resources/com/example/calendar/images/arrow.png");
+    CircleButton addNoteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/addButton.png");
+    CircleButton finishNoteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/arrow.png");
 
     /**
      * 启动函数.
@@ -74,8 +82,10 @@ public class HelloApplication extends Application {
         borderPane.setBottom(navigate);
         header1.addButton(addItemButton);
         header2.addButton(confirmButton);
-        borderPane.setTop(header1);
-        borderPane.setCenter(todoLists);
+        header3.addButton(addNoteButton);
+        header4.addButton(finishNoteButton);
+        borderPane.setTop(header3);
+        borderPane.setCenter(noteList);
 
         //显示
         Scene scene = new Scene(borderPane);
@@ -97,6 +107,22 @@ public class HelloApplication extends Application {
                 borderPane.setTop(header1);
             }
         });
+
+        addNoteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                borderPane.setCenter(noteDetail);
+                borderPane.setTop(header4);
+            }
+        });
+        finishNoteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                borderPane.setCenter(noteList);
+                borderPane.setTop(header3);
+            }
+        });
+
         EventHandler<ActionEvent> onTodoButtonClicked = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -114,7 +140,18 @@ public class HelloApplication extends Application {
                 borderPane.setTop(null);
             }
         };
-        navigate.addListener(onTodoButtonClicked,onScheduleButtonClicked);
+
+        EventHandler<ActionEvent> onNotesButtonClicked = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                navigate.activate((Button) actionEvent.getSource());
+                borderPane.setCenter(schedule);
+                borderPane.setTop(header3);
+                borderPane.setCenter(noteList);
+            }
+        };
+
+        navigate.addListener(onTodoButtonClicked,onScheduleButtonClicked,onNotesButtonClicked);
 
     }
 

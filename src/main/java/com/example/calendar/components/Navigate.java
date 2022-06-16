@@ -26,9 +26,9 @@ public class Navigate extends AnchorPane {
         //基础设置
         setStyle("-fx-background-color: #FFFFFF");
 
-        buttons[0] = new NavigateButton("file:src/main/resources/com/example/calendar/images/todo.png",true);
+        buttons[0] = new NavigateButton("file:src/main/resources/com/example/calendar/images/todo.png",false);
         buttons[1] = new NavigateButton("file:src/main/resources/com/example/calendar/images/schedule.png",false);
-        buttons[2] = new NavigateButton("file:src/main/resources/com/example/calendar/images/notes.png",false);
+        buttons[2] = new NavigateButton("file:src/main/resources/com/example/calendar/images/notes.png",true);
 
         buttons[0].setLayoutX(0);
         buttons[1].setLayoutX(100);
@@ -44,9 +44,10 @@ public class Navigate extends AnchorPane {
                 buttons[i].deactivate();
         }
     }
-    public void addListener(EventHandler<ActionEvent> handler1,EventHandler<ActionEvent> handler2){
+    public void addListener(EventHandler<ActionEvent> handler1,EventHandler<ActionEvent> handler2,EventHandler<ActionEvent> handler3){
         buttons[0].setOnAction(handler1);
         buttons[1].setOnAction(handler2);
+        buttons[2].setOnAction(handler3);
     }
 }
 

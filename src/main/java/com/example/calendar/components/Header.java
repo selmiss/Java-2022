@@ -26,8 +26,8 @@ import java.util.function.Consumer;
  * @since 2022.6.12
  */
 public class Header extends AnchorPane {
-    public Header(){
-        Text text1 = new Text("what's your plan today");
+    public Header(String var1,String var2){
+        Text text1 = new Text(var1);
         text1.setX(10);
         text1.setY(20);
         text1.setFont(Font.font("Microsoft YaHei",10));
@@ -35,7 +35,7 @@ public class Header extends AnchorPane {
         text2.setX(10);
         text2.setY(45);
         text2.setFont(Font.font("Microsoft YaHei",FontWeight.BOLD,14));
-        Text text3 = new Text("来看看有什么需要做的");
+        Text text3 = new Text(var2);
         text3.setX(10);
         text3.setY(70);
         text3.setFont(Font.font("Microsoft YaHei",14));

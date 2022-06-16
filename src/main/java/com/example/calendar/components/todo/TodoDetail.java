@@ -29,6 +29,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 待办事项详细类.
+ * @author 郭一帆
+ * @version 1.0
+ * @since 2022-6-12
+ */
 public class TodoDetail extends AnchorPane {
     private AnchorPane todoContent = new AnchorPane();
     private Label title = new Label("添加标题");
@@ -36,8 +42,6 @@ public class TodoDetail extends AnchorPane {
     private Label detail = new Label("添加内容");
 
     public TodoDetail(){
-        //通用css
-        String css = "";
 
         //基础设置
 
@@ -137,7 +141,14 @@ public class TodoDetail extends AnchorPane {
         this.detail.setText(detail);
     }
 
-    private class TextEventHandler implements EventHandler {
+    /**
+     * 文本标签点击事件处理类.
+     * <p>点击标签后出现文本输入框，将标签文本改变为输入框内容.</p>
+     * @author 郭一帆
+     * @version 1.0
+     * @since 2022-6-12
+     */
+    public class TextEventHandler implements EventHandler {
 
         @Override
         public void handle(Event event) {
@@ -174,6 +185,13 @@ public class TodoDetail extends AnchorPane {
         }
     }
 
+    /**
+     * 时间标签点击事件处理类.
+     * <p>点击标签后出现时间选择器，将标签文本改变为所选时间.</p>
+     * @author 郭一帆
+     * @version 1.0
+     * @since 2022-6-12
+     */
     private class TimeEventHandler implements EventHandler{
 
         @Override
@@ -192,7 +210,13 @@ public class TodoDetail extends AnchorPane {
         }
     }
 }
-
+/**
+ * 倒计时类.
+ * <p>显示倒计时.</p>
+ * @author 郭一帆
+ * @version 1.0
+ * @since 2022-6-12
+ */
 class CountDown extends Label{
     public CountDown( Label ddl){
         DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
