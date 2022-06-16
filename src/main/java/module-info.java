@@ -10,6 +10,7 @@ module com.example.calendar {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires javafx.graphics;
+    requires lombok;
 
     opens com.example.calendar to javafx.fxml;
     exports com.example.calendar;
