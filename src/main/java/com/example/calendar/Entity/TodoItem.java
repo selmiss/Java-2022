@@ -26,6 +26,18 @@ public class TodoItem {
         this.weight = weight;
     }
 
+    @Override
+    public String toString() {
+        return "TodoItem{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", date=" + date +
+                ", subject=" + subject +
+                ", weight=" + weight +
+                '}';
+    }
+
     public int getWeight() {
         return weight;
     }

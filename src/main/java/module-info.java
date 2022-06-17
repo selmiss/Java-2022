@@ -12,6 +12,7 @@ module com.example.calendar {
     requires javafx.graphics;
     requires lombok;
     requires org.commonmark;
+    requires poi;
 
     opens com.example.calendar to javafx.fxml;
     exports com.example.calendar;

@@ -6,6 +6,7 @@ import com.example.calendar.components.notes.NoteList;
 import com.example.calendar.components.schedule.Schedule;
 import com.example.calendar.components.todo.TodoDetail;
 import com.example.calendar.components.todo.TodoLists;
+import com.example.calendar.controller.TodoItemController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -51,6 +52,10 @@ public class HelloApplication extends Application {
     CircleButton addNoteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/addButton.png");
     CircleButton finishNoteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/arrow.png");
 
+    // 全局变量添加
+    // 控制类添加
+    TodoItemController todoItemController = new TodoItemController();
+
     /**
      * 启动函数.
      * <p>窗口基础设置、添加布局、初始化页面元素.</p>
@@ -68,6 +73,9 @@ public class HelloApplication extends Application {
         stage.setX(1100);
         stage.setY(80);
 
+        // 控制类测试
+        System.out.println("Start our program!");
+        todoItemController.ReadItemList();
 
         //当点击文本框以外的地方时转移焦点，从而使得文本框可以通过判断焦点失去事件而移除
         borderPane.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
