@@ -28,8 +28,8 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -95,7 +95,9 @@ public class HelloApplication extends Application {
 
         try{
 //            userOpController.addTodoItem("数据库考试",new Date(2022, 06, 21),"不知道写什么content", 0, 17);
-            userOpController.addTodoItem(todoItemController.ReadItemList());
+            Item item = new Item(1, "数据库考试", "my content", new Date(2022, 06, 01), 0, 17);
+            userOpController.addTodoItem(item, AllItem);
+//            userOpController.addTodoItemList(todoItemController.ReadItemList());
         }catch (Exception e){System.out.println("userControllerError!");}
 
         //当点击文本框以外的地方时转移焦点，从而使得文本框可以通过判断焦点失去事件而移除

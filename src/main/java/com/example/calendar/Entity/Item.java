@@ -25,10 +25,12 @@ public class Item {
         this.subject = subject;
         this.weight = weight;
     }
+
 //    @Override
 //    public int compareTo(Item i){
 //
 //    }
+
     @Override
     public String toString() {
         return "TodoItem{" +
