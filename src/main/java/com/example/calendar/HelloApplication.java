@@ -94,9 +94,9 @@ public class HelloApplication extends Application {
 //        todoItemController.ReadItemList();
 
         try{
-//            userOpController.addTodoItem("数据库考试",new Date(2022, 06, 21),"不知道写什么content", 0, 17);
-            Item item = new Item(1, "数据库考试", "my content", new Date(2022, 06, 01), 0, 17);
-            userOpController.addTodoItem(item, AllItem);
+            Item item = new Item(10, "数据库考试", "my content", new Date(2022, 06, 01), 0, 17);
+//            userOpController.addTodoItem(item, AllItem);
+            userOpController.deleteTodoItem(item, AllItem);
 //            userOpController.addTodoItemList(todoItemController.ReadItemList());
         }catch (Exception e){System.out.println("userControllerError!");}
 
