@@ -1,5 +1,6 @@
 package com.example.calendar;
 
+import com.example.calendar.Entity.Idea;
 import com.example.calendar.Entity.Item;
 import com.example.calendar.components.*;
 import com.example.calendar.components.notes.NoteDetail;
@@ -7,6 +8,7 @@ import com.example.calendar.components.notes.NoteList;
 import com.example.calendar.components.schedule.Schedule;
 import com.example.calendar.components.todo.TodoDetail;
 import com.example.calendar.components.todo.TodoLists;
+import com.example.calendar.controller.IdeaController;
 import com.example.calendar.controller.TodoItemController;
 import com.example.calendar.controller.UserOpController;
 import javafx.application.Application;
@@ -42,6 +44,7 @@ import java.util.List;
 public class HelloApplication extends Application {
     // 全局变量添加
     List<Item> AllItem = new ArrayList<>();
+    List<Idea> AllIdea = new ArrayList<>();
     // 控制类添加
     TodoItemController todoItemController = new TodoItemController();
 
@@ -67,6 +70,7 @@ public class HelloApplication extends Application {
     // 全局变量添加
     // 控制类添加
     UserOpController userOpController = new UserOpController();
+    IdeaController ideaController = new IdeaController();
 
 
     /**
@@ -91,6 +95,25 @@ public class HelloApplication extends Application {
         AllItem = todoItemController.ReadItemList(); //初始化list
         todoLists = new TodoLists(AllItem);
 
+        AllIdea = ideaController.ReadIdeaList();//初始化idea list
+
+
+//        todoItemController.ReadItemList();
+
+        try{
+//            Item item = new Item(10, "数据库考试", "my content", new Date(2022, 06, 01), 0, 17);
+//            userOpController.addTodoItem(item, AllItem);
+//            userOpController.deleteTodoItem(item, AllItem);
+//            userOpController.addTodoItemList(todoItemController.ReadItemList());
+//            List<Item> testlist = userOpController.sortedItemList(AllItem);
+//            for(int i = 0;i<testlist.size();i++){
+//                System.out.println("ID:" + testlist.get(i).getId() + "标题:" + testlist.get(i).getTitle() + "时间:" + testlist.get(i).getDate().toString());
+//            }
+//            ideaController.ReadIdeaList();
+            Idea idea = new Idea(5, "标题5", "内容5", new Date(2022, 06, 01));
+            userOpController.addIdea(idea, AllIdea);
+            ideaController.ReadIdeaList();
+        }catch (Exception e){System.out.println("userControllerError!");}
 
         //当点击文本框以外的地方时转移焦点，从而使得文本框可以通过判断焦点失去事件而移除
         borderPane.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
