@@ -5,6 +5,12 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
+/**
+ * 所有圆形图片按钮的父类.
+ * @author 郭一帆
+ * @version 1.0
+ * @since 2022.6.12
+ */
 public class CircleButton extends Button {
     public CircleButton(String url){
         Image image = new Image(url);

@@ -2,6 +2,12 @@ package com.example.calendar.utils;
 
 import java.util.Date;
 
+/**
+ * 工具类，计算两个时间的差.
+ * @author 郭一帆
+ * @version 1.0
+ * @since 2022.6.12
+ */
 public class TimeDiff {
     private long diffSeconds;
     private long diffMinutes;
@@ -15,6 +21,10 @@ public class TimeDiff {
         diffDays = diff / (24 * 60 * 60 * 1000);
     }
 
+    /**
+     * 根据时间段的长度，显示不同的样式.
+     * @return 时间差的最终显示文字.
+     */
     @Override
     public String toString() {
         if(diffSeconds<0||diffMinutes<0||diffHours<0||diffDays<0)

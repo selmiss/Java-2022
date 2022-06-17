@@ -11,6 +11,7 @@ module com.example.calendar {
     requires eu.hansolo.tilesfx;
     requires javafx.graphics;
     requires lombok;
+    requires org.commonmark;
 
     opens com.example.calendar to javafx.fxml;
     exports com.example.calendar;

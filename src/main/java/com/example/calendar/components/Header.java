@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -14,6 +15,7 @@ import javafx.util.Duration;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.function.Consumer;
 
 
 /**
@@ -24,8 +26,8 @@ import java.util.Date;
  * @since 2022.6.12
  */
 public class Header extends AnchorPane {
-    public Header(){
-        Text text1 = new Text("what's your plan today");
+    public Header(String var1,String var2){
+        Text text1 = new Text(var1);
         text1.setX(10);
         text1.setY(20);
         text1.setFont(Font.font("Microsoft YaHei",10));
@@ -33,7 +35,7 @@ public class Header extends AnchorPane {
         text2.setX(10);
         text2.setY(45);
         text2.setFont(Font.font("Microsoft YaHei",FontWeight.BOLD,14));
-        Text text3 = new Text("来看看有什么需要做的");
+        Text text3 = new Text(var2);
         text3.setX(10);
         text3.setY(70);
         text3.setFont(Font.font("Microsoft YaHei",14));
@@ -50,16 +52,22 @@ public class Header extends AnchorPane {
         newButton.setLayoutX(250);
         newButton.setLayoutY(52);
         newButton.setMinSize(25,25);
+        this.getChildren().forEach(new Consumer<Node>() {
+            @Override
+            public void accept(Node node) {
+                if(node instanceof CircleButton)
+                    getChildren().remove(node);
+            }
+        });
         this.getChildren().add(newButton);
-    }
-
-    public void removeButton(CircleButton newButton){
-        this.getChildren().remove(newButton);
     }
 }
 
 /**
- * 显示时间的文本
+ * 显示时间的文本.
+ * @author 郭一帆
+ * @version 1.0
+ * @since 2022.6.12
  */
 class TimeText extends Text{
     public TimeText(){

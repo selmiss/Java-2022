@@ -1,6 +1,7 @@
 package com.example.calendar.components.todo;
 
 import com.example.calendar.components.CircleButton;
+import com.example.calendar.utils.MyShadow;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -46,20 +47,10 @@ public class TodoLists extends ScrollPane {
         getStylesheets().add("file:src/main/resources/com/example/calendar/css/scroll.css");
         setBackground(new Background(new BackgroundFill(Color.web("#F1F9EE"), CornerRadii.EMPTY, Insets.EMPTY)));
         setHbarPolicy(ScrollBarPolicy.NEVER);
-        setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
-
-        IntegerProperty vValueProperty = new SimpleIntegerProperty(0);
-        int steps = 50;
-        vvalueProperty().bind(vValueProperty);
-        setOnSwipeDown(new EventHandler<GestureEvent>() {
-            public void handle(GestureEvent event) {
-                vValueProperty.set(vValueProperty.get() + steps);
-            }
-        });
+        setVbarPolicy(ScrollBarPolicy.NEVER);
 
 
-
-        vBox.setPadding(new Insets(20,10,20,10));
+        vBox.setPadding(new Insets(0,5,20,10));
         vBox.setBackground(new Background(new BackgroundFill(Color.web("#F1F9EE"), CornerRadii.EMPTY, Insets.EMPTY)));
         TodoList badTodoList = new TodoList("bad");
         TodoList normalTodoList = new TodoList("normal");
@@ -262,16 +253,4 @@ class TodoItem extends AnchorPane{
     }
 }
 
-/**
- *自定义阴影类.
- * @author 郭一帆
- * @version 1.0
- * @since 2022-6-13
- */
-class MyShadow extends DropShadow{
-    public MyShadow(){
-        setBlurType(BlurType.GAUSSIAN);
-        setColor(Color.rgb(0,0,0,0.3));
-        setRadius(12);
-    }
-}
+
