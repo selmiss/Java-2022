@@ -1,5 +1,6 @@
 package com.example.calendar;
 
+import com.example.calendar.Entity.Item;
 import com.example.calendar.components.*;
 import com.example.calendar.components.notes.NoteDetail;
 import com.example.calendar.components.notes.NoteList;
@@ -24,6 +25,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 启动应用.
@@ -33,6 +36,10 @@ import java.io.IOException;
  * @since 2022-6-12
  */
 public class HelloApplication extends Application {
+    // 全局变量添加
+    List<Item> AllItem = new ArrayList<>();
+    // 控制类添加
+    TodoItemController todoItemController = new TodoItemController();
 
     BorderPane borderPane = new BorderPane();//最外层布局
 
@@ -42,7 +49,7 @@ public class HelloApplication extends Application {
     Header header3 = new Header("you can take notes here","来记录此刻的灵感吧");//笔记列表页面顶部标题栏
     Header header4 = new Header("you can take notes here","来记录此刻的灵感吧");//笔记详细页面顶部标题栏
     TodoDetail todoDetail = new TodoDetail();//待办事项详细
-    TodoLists todoLists = new TodoLists();//待办事项列表
+    TodoLists todoLists = new TodoLists(AllItem);//待办事项列表
     Schedule schedule = new Schedule();//课程表
     NoteList noteList = new NoteList();//笔记列表
     NoteDetail noteDetail = new NoteDetail();//笔记详细
@@ -51,10 +58,6 @@ public class HelloApplication extends Application {
     CircleButton confirmButton = new CircleButton("file:src/main/resources/com/example/calendar/images/arrow.png");
     CircleButton addNoteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/addButton.png");
     CircleButton finishNoteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/arrow.png");
-
-    // 全局变量添加
-    // 控制类添加
-    TodoItemController todoItemController = new TodoItemController();
 
     /**
      * 启动函数.
@@ -75,7 +78,8 @@ public class HelloApplication extends Application {
 
         // 控制类测试
         System.out.println("Start our program!");
-        todoItemController.ReadItemList();
+        AllItem = todoItemController.ReadItemList(); //初始化list
+        todoLists = new TodoLists(AllItem);
 
         //当点击文本框以外的地方时转移焦点，从而使得文本框可以通过判断焦点失去事件而移除
         borderPane.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -131,6 +135,7 @@ public class HelloApplication extends Application {
             }
         });
 
+        //导航栏监听事件
         EventHandler<ActionEvent> onTodoButtonClicked = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -140,6 +145,7 @@ public class HelloApplication extends Application {
                 //header.addButton(addItemButton);
             }
         };
+        //导航栏监听事件
         EventHandler<ActionEvent> onScheduleButtonClicked = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -148,7 +154,7 @@ public class HelloApplication extends Application {
                 borderPane.setTop(null);
             }
         };
-
+        //导航栏监听事件
         EventHandler<ActionEvent> onNotesButtonClicked = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {

@@ -1,5 +1,6 @@
 package com.example.calendar.components.todo;
 
+import com.example.calendar.Entity.Item;
 import com.example.calendar.components.CircleButton;
 import com.example.calendar.utils.MyShadow;
 import javafx.animation.TranslateTransition;
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -37,11 +39,11 @@ import java.util.Stack;
 public class TodoLists extends ScrollPane {
 
     VBox vBox = new VBox();
-    TodoList badTodoList = new TodoList("bad");
-    TodoList normalTodoList = new TodoList("normal");
-    TodoList happyTodoList = new TodoList("happy");
+    TodoList badTodoList = new TodoList();
+    TodoList normalTodoList = new TodoList();
+    TodoList happyTodoList = new TodoList();
 
-    public TodoLists(){
+    public TodoLists(List<Item> item_arr){
         //基础设置
 
         getStylesheets().add("file:src/main/resources/com/example/calendar/css/scroll.css");
@@ -52,9 +54,9 @@ public class TodoLists extends ScrollPane {
 
         vBox.setPadding(new Insets(0,5,20,10));
         vBox.setBackground(new Background(new BackgroundFill(Color.web("#F1F9EE"), CornerRadii.EMPTY, Insets.EMPTY)));
-        TodoList badTodoList = new TodoList("bad");
-        TodoList normalTodoList = new TodoList("normal");
-        TodoList happyTodoList = new TodoList("happy");
+        TodoList badTodoList = new TodoList("bad",item_arr);
+        TodoList normalTodoList = new TodoList("normal",item_arr);
+        TodoList happyTodoList = new TodoList("happy",item_arr);
         vBox.getChildren().addAll(badTodoList,normalTodoList,happyTodoList);
         this.setContent(vBox);
     }
@@ -69,8 +71,11 @@ public class TodoLists extends ScrollPane {
 class TodoList extends VBox{
     public Stack<TodoItem> itemStack;
     private boolean isCollected=false;
+    public TodoList()
+    {
 
-    public TodoList(String type){
+    }
+    public TodoList(String type, List<Item> item_list){
         itemStack = new Stack<>();
 
         //基础设置
@@ -87,6 +92,8 @@ class TodoList extends VBox{
                 "-fx-font-weight: normal;" +
                 "-fx-spacing: 20;");
         title.setEffect(new MyShadow());
+
+        //设置展开收起
         title.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -110,37 +117,43 @@ class TodoList extends VBox{
         if(type.equals("bad")){
             label = new Label("紧急事项");
             label.setTextFill(Color.valueOf("#E45C5C"));
-            item = new TodoItem(2);
+            //item = new TodoItem(2,);
         }
         else if(type.equals("normal"))
         {
             label = new Label("一般事项");
             label.setTextFill(Color.valueOf("#5C92E4"));
-            item = new TodoItem(1);
+            //item = new TodoItem(1);
         }
         else{
             label = new Label("宽松事项");
             label.setTextFill(Color.valueOf("#31B02F"));
-            item = new TodoItem(0);
+            //item = new TodoItem(0);
         }
-
-        TodoItem item2;
-        if(type.equals("bad")){
-            item2 = new TodoItem(2);
-        }
-        else if(type.equals("normal"))
-        {
-            item2 = new TodoItem(1);
-        }
-        else{
-            item2 = new TodoItem(0);
-        }
-
-        itemStack.add(item);
-        itemStack.add(item2);
-
         title.getChildren().addAll(emotionIcon1,label,emotionIcon2);
-        getChildren().addAll(title,item,item2);
+        getChildren().addAll(title);
+        Date now = new Date();
+        for(Item e : item_list)
+        {
+            TodoItem item2;
+            long diff = e.getDate().getTime() - now.getTime();
+            long days = diff / (1000*60*60*24);
+            if(type.equals("bad") && days <= 1 ){
+                item2 = new TodoItem(2,e);
+            }
+            else if(type.equals("normal") && days>1 && days<=3)
+            {
+                item2 = new TodoItem(1,e);
+            }
+            else if(type.equals("happy") && days > 3){
+                item2 = new TodoItem(0,e);
+            }
+            else continue;
+            itemStack.add(item2);
+            getChildren().add(item2);
+        }
+
+
     }
 }
 
@@ -152,7 +165,7 @@ class TodoList extends VBox{
  */
 class TodoItem extends AnchorPane{
     private int state=0;
-    public TodoItem(int st){
+    public TodoItem(int st, Item item){
         this.state = st;
         //基础设置
         setPrefWidth(100);
@@ -182,7 +195,8 @@ class TodoItem extends AnchorPane{
         finishButton.setLayoutY(10);
 
         //待办标题
-        Label title = new Label("操作系统理论作业");
+        String item_title = item.getTitle();
+        Label title = new Label(item_title);
         title.setLayoutY(10);
         title.setLayoutX(60);
         title.setAlignment(Pos.CENTER);
@@ -193,7 +207,7 @@ class TodoItem extends AnchorPane{
         //截止时间
         Label ddl = new Label();
         DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-        ddl.setText(df.format(new Date()));
+        ddl.setText(df.format(item.getDate()));
         ddl.setLayoutY(30);
         ddl.setLayoutX(60);
         ddl.setAlignment(Pos.CENTER);
