@@ -7,6 +7,7 @@ import com.example.calendar.components.notes.NoteList;
 import com.example.calendar.components.schedule.Schedule;
 import com.example.calendar.components.todo.TodoDetail;
 import com.example.calendar.components.todo.TodoLists;
+import com.example.calendar.controller.IdeaController;
 import com.example.calendar.controller.TodoItemController;
 import com.example.calendar.controller.UserOpController;
 import javafx.application.Application;
@@ -67,6 +68,7 @@ public class HelloApplication extends Application {
     // 全局变量添加
     // 控制类添加
     UserOpController userOpController = new UserOpController();
+    IdeaController ideaController = new IdeaController();
 
 
     /**
@@ -98,10 +100,11 @@ public class HelloApplication extends Application {
 //            userOpController.addTodoItem(item, AllItem);
 //            userOpController.deleteTodoItem(item, AllItem);
 //            userOpController.addTodoItemList(todoItemController.ReadItemList());
-            List<Item> testlist = userOpController.sortedItemList(AllItem);
-            for(int i = 0;i<testlist.size();i++){
-                System.out.println("ID:" + testlist.get(i).getId() + "标题:" + testlist.get(i).getTitle() + "时间:" + testlist.get(i).getDate().toString());
-            }
+//            List<Item> testlist = userOpController.sortedItemList(AllItem);
+//            for(int i = 0;i<testlist.size();i++){
+//                System.out.println("ID:" + testlist.get(i).getId() + "标题:" + testlist.get(i).getTitle() + "时间:" + testlist.get(i).getDate().toString());
+//            }
+            ideaController.ReadIdeaList();
         }catch (Exception e){System.out.println("userControllerError!");}
 
         //当点击文本框以外的地方时转移焦点，从而使得文本框可以通过判断焦点失去事件而移除
