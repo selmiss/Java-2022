@@ -20,9 +20,9 @@ import org.apache.poi.ss.usermodel.DateUtil;
 
 public class TodoItemController {
 
-    public List<TodoItem> GetEmergencyItme()
+    public int JudgeTime(List<TodoItem> emergancy, List<TodoItem> normal, List<TodoItem> relax)
     {
-        return null;
+        return 0;
     }
     public List<TodoItem> ReadItemList()
     {
@@ -59,7 +59,6 @@ public class TodoItemController {
                 todolist.add(todoItem);
             }
         }catch (Exception e) {System.out.println("File open/read fail!");}
-
         return todolist;
     }
 }
