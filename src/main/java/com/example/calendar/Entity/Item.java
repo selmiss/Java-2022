@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class TodoItem {
+public class Item {
     private int id;
     private String title;
     private String content;
@@ -17,7 +17,7 @@ public class TodoItem {
     private int subject;
     private int weight;
 
-    public TodoItem(int id, String title, String content, Date date, int subject, int weight) {
+    public Item(int id, String title, String content, Date date, int subject, int weight) {
         this.id = id;
         this.title = title;
         this.content = content;

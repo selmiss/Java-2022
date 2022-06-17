@@ -1,43 +1,38 @@
 package com.example.calendar.controller;
 
-import com.example.calendar.Entity.TodoItem;
+import com.example.calendar.Entity.Item;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.DateUtil;
 
 public class TodoItemController {
 
-    public int JudgeTime(List<TodoItem> emergancy, List<TodoItem> normal, List<TodoItem> relax)
+    public int JudgeTime(List<Item> emergancy, List<Item> normal, List<Item> relax)
     {
         return 0;
     }
-    public List<TodoItem> ReadItemList()
+    public List<Item> ReadItemList()
     {
         System.out.println("Start read item_list!");
-        List<TodoItem> todoItems = new ArrayList<>();
+        List<Item> items = new ArrayList<>();
         String root = System.getProperty("user.dir");
         String path = root + "/src/main/resources/data/itemData.xls";
-        List<TodoItem> todolist = new ArrayList<>();
+        List<Item> todolist = new ArrayList<>();
         System.out.println("path:"+path );
         try {
             FileInputStream in = new FileInputStream(path);
             HSSFWorkbook workbook = new HSSFWorkbook(in);
             HSSFSheet sheet = workbook.getSheetAt(0);
             int row_max = sheet.getLastRowNum();
-            for(int i=1;i<row_max;i++)
+            for(int i=1;i<=row_max;i++)
             {
                 HSSFRow row = sheet.getRow(i);
 
@@ -54,9 +49,9 @@ public class TodoItemController {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                         date = cell.getDateCellValue();
                 }catch (Exception dateWrong){System.out.println("日期转换错误");}
-                TodoItem todoItem = new TodoItem(i,title,content,date,subject,weight);
-                System.out.println(todoItem.toString());
-                todolist.add(todoItem);
+                Item item = new Item(i,title,content,date,subject,weight);
+                System.out.println(item.toString());
+                todolist.add(item);
             }
         }catch (Exception e) {System.out.println("File open/read fail!");}
         return todolist;
