@@ -1,5 +1,6 @@
 package com.example.calendar;
 
+import com.example.calendar.Entity.Idea;
 import com.example.calendar.Entity.Item;
 import com.example.calendar.components.*;
 import com.example.calendar.components.notes.NoteDetail;
@@ -43,6 +44,7 @@ import java.util.List;
 public class HelloApplication extends Application {
     // 全局变量添加
     List<Item> AllItem = new ArrayList<>();
+    List<Idea> AllIdea = new ArrayList<>();
     // 控制类添加
     TodoItemController todoItemController = new TodoItemController();
 
@@ -93,6 +95,9 @@ public class HelloApplication extends Application {
         AllItem = todoItemController.ReadItemList(); //初始化list
         todoLists = new TodoLists(AllItem);
 
+        AllIdea = ideaController.ReadIdeaList();//初始化idea list
+
+
 //        todoItemController.ReadItemList();
 
         try{
@@ -104,6 +109,9 @@ public class HelloApplication extends Application {
 //            for(int i = 0;i<testlist.size();i++){
 //                System.out.println("ID:" + testlist.get(i).getId() + "标题:" + testlist.get(i).getTitle() + "时间:" + testlist.get(i).getDate().toString());
 //            }
+//            ideaController.ReadIdeaList();
+            Idea idea = new Idea(5, "标题5", "内容5", new Date(2022, 06, 01));
+            userOpController.addIdea(idea, AllIdea);
             ideaController.ReadIdeaList();
         }catch (Exception e){System.out.println("userControllerError!");}
 

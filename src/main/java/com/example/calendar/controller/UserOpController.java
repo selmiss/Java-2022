@@ -1,5 +1,6 @@
 package com.example.calendar.controller;
 
+import com.example.calendar.Entity.Idea;
 import com.example.calendar.Entity.Item;
 import javafx.print.Collation;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -120,6 +121,77 @@ public class UserOpController {
     /** 将给予的list进行时间从近到远排序 **/
     public List<Item> sortedItemList(List<Item> list){
         list.sort(Item::compareTo);
+        return list;
+    }
+    /** **/
+    public void addIdea(Idea idea, List<Idea> list) throws Exception{
+        list.add(idea);
+        idea.setId(list.size()+1);
+        list = sortedIdeaList(list);//排序
+        addIdeaList(list);
+    }
+    /** **/
+    public void addIdeaList(List<Idea> arr) throws Exception{
+        arr = sortedIdeaList(arr);//排序
+        System.out.println("add arr ideaList begin");
+        String root = System.getProperty("user.dir");
+        String path = root + "/src/main/resources/data/ideaData.xls";
+        System.out.println("path" + path);
+        System.out.println("add idealist ok 1");
+        File file = new File(path);
+        OutputStream outputStream = new FileOutputStream(file);
+        System.out.println("add idealist ok 2");
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("sheet1");
+
+
+        HSSFRow row = sheet.createRow(0);
+        row.createCell(0).setCellValue("标题");
+        row.createCell(1).setCellValue("时间");
+        row.createCell(2).setCellValue("内容");
+        row.createCell(3).setCellValue("类别");
+        row.createCell(4).setCellValue("权重");
+        System.out.println("add idealist ok 3");
+        for(Idea x : arr){
+            HSSFRow temp_row = sheet.createRow(sheet.getLastRowNum()+1);
+            temp_row.createCell(0).setCellValue(x.getTitle());
+            temp_row.createCell(1).setCellValue(x.getContent());
+            temp_row.createCell(2).setCellValue(x.getDate());
+        }
+        System.out.println("add idealist ok 4");
+        workbook.setActiveSheet(0);
+        workbook.write(outputStream);
+        outputStream.close();
+        System.out.println("add list ok 5");
+    }
+    /** **/
+    public void deleteIdea(Idea idea, List<Idea> list){
+        int id = idea.getId(), flag = 0, i=0;
+        System.out.println("del idea ok 1");
+        for(i=0;i<list.size();i++){
+            if(flag == 1){
+                System.out.println("没问题0");
+                list.get(i).setId(list.get(i).getId()-1);
+                System.out.println("没问题1");
+            }
+            if(list.get(i).getId() == id && flag == 0) {
+                list.remove(list.get(i));
+                System.out.println("没问题2");
+                flag = 1;
+            }
+            System.out.println("del idea ok 2");
+        }
+        try{
+            list = sortedIdeaList(list);
+            addIdeaList(list);
+        }catch (Exception e){
+            System.out.println("这里是删除方法 add idea List 方法出了问题");
+        }
+        System.out.println("del idea ok 3");
+    }
+    /** **/
+    public List<Idea> sortedIdeaList(List<Idea> list){
+        list.sort(Idea::compareTo);
         return list;
     }
 }
