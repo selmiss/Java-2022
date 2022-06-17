@@ -1,6 +1,7 @@
 package com.example.calendar.controller;
 
 import com.example.calendar.Entity.Item;
+import javafx.print.Collation;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -8,6 +9,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -111,5 +113,9 @@ public class UserOpController {
             System.out.println("这里是删除方法 add List 方法出了问题");
         }
         System.out.println("del ok 3");
+    }
+    public List<Item> sortedItemList(List<Item> list){
+        list.sort(Item::compareTo);
+        return list;
     }
 }

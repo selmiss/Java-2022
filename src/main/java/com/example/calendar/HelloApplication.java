@@ -94,10 +94,14 @@ public class HelloApplication extends Application {
 //        todoItemController.ReadItemList();
 
         try{
-            Item item = new Item(10, "数据库考试", "my content", new Date(2022, 06, 01), 0, 17);
+//            Item item = new Item(10, "数据库考试", "my content", new Date(2022, 06, 01), 0, 17);
 //            userOpController.addTodoItem(item, AllItem);
-            userOpController.deleteTodoItem(item, AllItem);
+//            userOpController.deleteTodoItem(item, AllItem);
 //            userOpController.addTodoItemList(todoItemController.ReadItemList());
+            List<Item> testlist = userOpController.sortedItemList(AllItem);
+            for(int i = 0;i<testlist.size();i++){
+                System.out.println("ID:" + testlist.get(i).getId() + "标题:" + testlist.get(i).getTitle() + "时间:" + testlist.get(i).getDate().toString());
+            }
         }catch (Exception e){System.out.println("userControllerError!");}
 
         //当点击文本框以外的地方时转移焦点，从而使得文本框可以通过判断焦点失去事件而移除

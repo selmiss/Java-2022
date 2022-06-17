@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Item {
+public class Item implements Comparable<Item>{
     private int id;
     private String title;
     private String content;
@@ -26,10 +26,16 @@ public class Item {
         this.weight = weight;
     }
 
-//    @Override
-//    public int compareTo(Item i){
-//
-//    }
+    @Override
+    public int compareTo(Item i){
+        if(this.getDate().after(i.getDate())){
+            return 1;
+        }
+        else if(this.getDate().before(i.getDate())){
+            return -1;
+        }
+        return 0;
+    }
 
     @Override
     public String toString() {
