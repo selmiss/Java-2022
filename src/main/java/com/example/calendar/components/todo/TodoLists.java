@@ -2,6 +2,7 @@ package com.example.calendar.components.todo;
 
 import com.example.calendar.Entity.Item;
 import com.example.calendar.components.CircleButton;
+import com.example.calendar.controller.UserOpController;
 import com.example.calendar.utils.MyShadow;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.IntegerProperty;
@@ -10,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BlurType;
@@ -72,6 +74,7 @@ public class TodoLists extends ScrollPane {
 class TodoList extends VBox{
     public Stack<TodoItem> itemStack;
     private boolean isCollected=false;
+    UserOpController userOpController = new UserOpController();
     public TodoList()
     {
 
@@ -149,7 +152,7 @@ class TodoList extends VBox{
                 item2 = new TodoItem(0,e, item_list);
             }
             else continue;
-            //设置删除监听事件
+            //设置删除监听事件 两个按钮都是删除
             item2.finishButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -159,6 +162,7 @@ class TodoList extends VBox{
                         {
                             item_list.remove(i);
                             System.out.println("找到删除项!");
+                            userOpController.deleteTodoItem(e,item_list);
                             getChildren().remove(item2);
                             break;
                         }
@@ -175,11 +179,18 @@ class TodoList extends VBox{
                         {
                             item_list.remove(i);
                             System.out.println("找到删除项!");
+                            userOpController.deleteTodoItem(e,item_list);
                             getChildren().remove(item2);
                             break;
                         }
                     }
                     itemStack.remove(item2);
+                }
+            });
+            item2.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("该切换了");
                 }
             });
             itemStack.add(item2);
