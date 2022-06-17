@@ -91,14 +91,7 @@ public class HelloApplication extends Application {
         AllItem = todoItemController.ReadItemList(); //初始化list
         todoLists = new TodoLists(AllItem);
 
-//        todoItemController.ReadItemList();
 
-        try{
-//            userOpController.addTodoItem("数据库考试",new Date(2022, 06, 21),"不知道写什么content", 0, 17);
-            Item item = new Item(1, "数据库考试", "my content", new Date(2022, 06, 01), 0, 17);
-            userOpController.addTodoItem(item, AllItem);
-//            userOpController.addTodoItemList(todoItemController.ReadItemList());
-        }catch (Exception e){System.out.println("userControllerError!");}
 
         //当点击文本框以外的地方时转移焦点，从而使得文本框可以通过判断焦点失去事件而移除
         borderPane.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -136,6 +129,10 @@ public class HelloApplication extends Application {
         confirmButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                System.out.println(todoDetail.getItem());
+                AllItem.add(todoDetail.getItem());
+                todoDetail=new TodoDetail();
+                todoLists=new TodoLists(AllItem);
                 borderPane.setCenter(todoLists);
                 borderPane.setTop(header1);
             }

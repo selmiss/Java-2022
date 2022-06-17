@@ -30,7 +30,10 @@ public class Item {
 //    public int compareTo(Item i){
 //
 //    }
-
+    public Item()
+    {
+        this.date = new Date();
+    }
     @Override
     public String toString() {
         return "TodoItem{" +
