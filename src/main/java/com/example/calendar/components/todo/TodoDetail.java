@@ -1,5 +1,6 @@
 package com.example.calendar.components.todo;
 
+import com.example.calendar.Entity.Item;
 import com.example.calendar.utils.TimeDiff;
 import com.example.calendar.utils.TimePicker;
 import javafx.animation.KeyFrame;
@@ -40,7 +41,7 @@ public class TodoDetail extends AnchorPane {
     private Label title = new Label("添加标题");
     private Label ddl = new Label();
     private Label detail = new Label("添加内容");
-
+    private Item item = new Item();
     public TodoDetail(){
 
         //基础设置
@@ -109,12 +110,20 @@ public class TodoDetail extends AnchorPane {
                 "-fx-label-padding: 10" );
 
         //事件
-        title.addEventHandler(MouseDragEvent.MOUSE_CLICKED,new TextEventHandler());
+        title.addEventHandler(MouseDragEvent.MOUSE_CLICKED,new TitleEventHandler());
         detail.addEventHandler(MouseDragEvent.MOUSE_CLICKED,new TextEventHandler());
         ddl.addEventHandler(MouseDragEvent.MOUSE_CLICKED,new TimeEventHandler());
 
         todoContent.getChildren().addAll(title,countDown,ddl,detail);
         getChildren().add(todoContent);
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public String getTitle() {
@@ -149,6 +158,48 @@ public class TodoDetail extends AnchorPane {
      * @since 2022-6-12
      */
     public class TextEventHandler implements EventHandler {
+        @Override
+        public void handle(Event event) {
+            Object source = event.getSource();
+            Label src = (Label)source;
+            TextArea textArea = new TextArea();
+            //基础设置
+            textArea.setWrapText(true);
+            //用输入框覆盖标签
+            textArea.setMinSize(90,20);
+            textArea.setPrefWidth(src.getPrefWidth()-12);
+            textArea.setPrefHeight(src.getPrefHeight()-12);
+            textArea.setLayoutY(src.getLayoutY()+6);
+            textArea.setLayoutX(src.getLayoutX()+6);
+            textArea.setStyle(
+                    src.getStyle());
+            textArea.setText(src.getText());
+            textArea.selectAll();
+
+            //失去焦点时消失事件
+            textArea.focusedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+                    if(oldValue&&!newValue)
+                    {
+                        src.setText(textArea.getText());
+                        todoContent.getChildren().remove(textArea);
+                        item.setContent(src.getText());
+                    }
+
+                }
+            });
+            todoContent.getChildren().add(textArea);
+        }
+    }
+    /**
+     * 时间标签点击事件处理类.
+     * <p>标题事件处理</p>
+     * @author 景子昊
+     * @version 1.0
+     * @since 2022-6-17
+     */
+    public class TitleEventHandler implements EventHandler {
 
         @Override
         public void handle(Event event) {
@@ -176,11 +227,11 @@ public class TodoDetail extends AnchorPane {
                     {
                         src.setText(textArea.getText());
                         todoContent.getChildren().remove(textArea);
+                        item.setTitle(src.getText());
                     }
 
                 }
             });
-
             todoContent.getChildren().add(textArea);
         }
     }
@@ -198,7 +249,7 @@ public class TodoDetail extends AnchorPane {
         public void handle(Event event) {
             Object source = event.getSource();
             Label src = (Label)source;
-            TimePicker timePicker = new TimePicker(src);
+            TimePicker timePicker = new TimePicker(src,item);
 
             //打开新的窗口选择时间
             Stage timeStage = new Stage();
@@ -207,6 +258,7 @@ public class TodoDetail extends AnchorPane {
             Scene timeScene = new Scene(timePicker);
             timeStage.setScene(timeScene);
             timeStage.show();
+
         }
     }
 }

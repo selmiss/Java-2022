@@ -1,6 +1,7 @@
 package com.example.calendar.utils;
 
 
+import com.example.calendar.Entity.Item;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,6 +18,7 @@ import javafx.stage.StageStyle;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TimePicker extends VBox{
@@ -34,8 +36,8 @@ public class TimePicker extends VBox{
     public String strYearMouth;
     public String strYearMouthDay;
     public Label labelSelected;
-
-    public TimePicker(Label src){
+    public String time;
+    public TimePicker(Label src, Item item){
         root = new VBox();
         root.setMinSize(310,200);
         root.setMaxSize(310,200);
@@ -197,7 +199,14 @@ public class TimePicker extends VBox{
                 Stage stage = (Stage) btnOK.getScene().getWindow();
                 stage.close();
                 src.setText(strYear+"."+(Integer.parseInt(strYearMouth)+1)+"."+strYearMouthDay+" "+strValue(Integer.valueOf(hour.getValue()))+":"+strValue(Integer.valueOf(minute.getValue()))+":"+strValue(Integer.valueOf(second.getValue())));
-                System.out.println(strYear+"."+(Integer.parseInt(strYearMouth)+1)+"."+strYearMouthDay+" "+strValue(Integer.valueOf(hour.getValue()))+":"+strValue(Integer.valueOf(minute.getValue()))+":"+strValue(Integer.valueOf(second.getValue())));
+                time=strYear+"."+(Integer.parseInt(strYearMouth)+1)+"."+strYearMouthDay+" "+strValue(Integer.valueOf(hour.getValue()))+":"+strValue(Integer.valueOf(minute.getValue()))+":"+strValue(Integer.valueOf(second.getValue()));
+//                System.out.println(strYear+"."+(Integer.parseInt(strYearMouth)+1)+"."+strYearMouthDay+" "+strValue(Integer.valueOf(hour.getValue()))+":"+strValue(Integer.valueOf(minute.getValue()))+":"+strValue(Integer.valueOf(second.getValue())));
+
+                item.setDate(new Date());
+                try{
+                    SimpleDateFormat sf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+                    item.setDate(sf.parse(time));}
+                catch (Exception dd){System.out.println("添加事项日期异常");}
             }else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("请先选择日期");

@@ -143,6 +143,10 @@ public class HelloApplication extends Application {
         confirmButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                System.out.println(todoDetail.getItem());
+                AllItem.add(todoDetail.getItem());
+                todoDetail=new TodoDetail();
+                todoLists=new TodoLists(AllItem);
                 borderPane.setCenter(todoLists);
                 borderPane.setTop(header1);
             }

@@ -26,6 +26,12 @@ public class Item implements Comparable<Item>{
         this.weight = weight;
     }
 
+
+    public Item()
+    {
+        this.date = new Date();
+    }
+
     @Override
     public int compareTo(Item i){
         if(this.getDate().after(i.getDate())){

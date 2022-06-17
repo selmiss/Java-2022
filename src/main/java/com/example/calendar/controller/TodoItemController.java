@@ -15,10 +15,6 @@ import org.apache.poi.ss.usermodel.Cell;
 
 public class TodoItemController {
 
-    public int JudgeTime(List<Item> emergancy, List<Item> normal, List<Item> relax)
-    {
-        return 0;
-    }
     public List<Item> ReadItemList()
     {
         System.out.println("Start read item_list!");
