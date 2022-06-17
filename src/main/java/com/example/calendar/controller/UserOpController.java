@@ -6,18 +6,16 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
 public class UserOpController {
 
-    public void addTodoItem(String title, Date date, String content, int subject, int weight) throws Exception {
-        System.out.println("add TodoItem begin");
+    public void addTodoItem(Item item, List<Item> list) throws Exception {
+        /*System.out.println("add TodoItem begin");
         String root = System.getProperty("user.dir");
         String path = root + "/src/main/resources/data/new_itemData.xls";
         System.out.println("path" + path);
@@ -44,9 +42,11 @@ public class UserOpController {
 
         workbook.setActiveSheet(0);
         workbook.write(outputStream);
-        outputStream.close();
+        outputStream.close();*/
+        list.add(item);
+        addTodoItemList(list);
     }
-    public void addTodoItem(List<Item> arr) throws Exception {
+    public void addTodoItemList(List<Item> arr) throws Exception {
         System.out.println("add arr TodoItem begin");
         String root = System.getProperty("user.dir");
         String path = root + "/src/main/resources/data/itemData.xls";
