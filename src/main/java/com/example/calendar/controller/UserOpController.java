@@ -53,10 +53,12 @@ public class UserOpController {
         outputStream.close();*/
         list.add(item);
         item.setId(list.size()+1);
+        list = sortedItemList(list);//排序
         addTodoItemList(list);
     }
     /** 添加多个待办元素 **/
     public void addTodoItemList(List<Item> arr) throws Exception {
+        arr = sortedItemList(arr);//排序
         System.out.println("add arr TodoItemList begin");
         String root = System.getProperty("user.dir");
         String path = root + "/src/main/resources/data/itemData.xls";
@@ -108,12 +110,14 @@ public class UserOpController {
             System.out.println("del ok 2");
         }
         try{
+            list = sortedItemList(list);
             addTodoItemList(list);
         }catch (Exception e){
             System.out.println("这里是删除方法 add List 方法出了问题");
         }
         System.out.println("del ok 3");
     }
+    /** 将给予的list进行时间从近到远排序 **/
     public List<Item> sortedItemList(List<Item> list){
         list.sort(Item::compareTo);
         return list;
