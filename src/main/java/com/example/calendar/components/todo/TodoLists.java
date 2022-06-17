@@ -6,6 +6,7 @@ import com.example.calendar.utils.MyShadow;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -113,7 +114,6 @@ class TodoList extends VBox{
         ImageView emotionIcon1 = new ImageView(image);
         ImageView emotionIcon2 = new ImageView(image);
         Label label;
-        TodoItem item;
         if(type.equals("bad")){
             label = new Label("紧急事项");
             label.setTextFill(Color.valueOf("#E45C5C"));
@@ -139,16 +139,49 @@ class TodoList extends VBox{
             long diff = e.getDate().getTime() - now.getTime();
             long days = diff / (1000*60*60*24);
             if(type.equals("bad") && days <= 1 ){
-                item2 = new TodoItem(2,e);
+                item2 = new TodoItem(2,e, item_list);
             }
             else if(type.equals("normal") && days>1 && days<=3)
             {
-                item2 = new TodoItem(1,e);
+                item2 = new TodoItem(1,e, item_list);
             }
             else if(type.equals("happy") && days > 3){
-                item2 = new TodoItem(0,e);
+                item2 = new TodoItem(0,e, item_list);
             }
             else continue;
+            //设置删除监听事件
+            item2.finishButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    for(int i=0;i < item_list.size();i++)
+                    {
+                        if(item_list.get(i).getId() == e.getId())
+                        {
+                            item_list.remove(i);
+                            System.out.println("找到删除项!");
+                            getChildren().remove(item2);
+                            break;
+                        }
+                    }
+                    itemStack.remove(item2);
+                }
+            });
+            item2.deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    for(int i=0;i < item_list.size();i++)
+                    {
+                        if(item_list.get(i).getId() == e.getId())
+                        {
+                            item_list.remove(i);
+                            System.out.println("找到删除项!");
+                            getChildren().remove(item2);
+                            break;
+                        }
+                    }
+                    itemStack.remove(item2);
+                }
+            });
             itemStack.add(item2);
             getChildren().add(item2);
         }
@@ -165,7 +198,9 @@ class TodoList extends VBox{
  */
 class TodoItem extends AnchorPane{
     private int state=0;
-    public TodoItem(int st, Item item){
+    CircleButton finishButton;
+    CircleButton deleteButton;
+    public TodoItem(int st, Item item, List<Item> item_list){
         this.state = st;
         //基础设置
         setPrefWidth(100);
@@ -178,7 +213,7 @@ class TodoItem extends AnchorPane{
         setEffect(new MyShadow());
 
         //已完成按钮
-        CircleButton finishButton;
+
         if(state==0)
         {
             finishButton = new CircleButton("file:src/main/resources/com/example/calendar/images/confirm/green.png");
@@ -247,7 +282,7 @@ class TodoItem extends AnchorPane{
         }
 
         //删除按钮
-        CircleButton deleteButton;
+
         if(state==0)
         {
             deleteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/delete/green.png");

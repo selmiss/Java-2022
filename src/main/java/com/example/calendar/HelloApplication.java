@@ -66,7 +66,6 @@ public class HelloApplication extends Application {
 
     // 全局变量添加
     // 控制类添加
-    TodoItemController todoItemController = new TodoItemController();
     UserOpController userOpController = new UserOpController();
 
 
@@ -114,8 +113,8 @@ public class HelloApplication extends Application {
         header2.addButton(confirmButton);
         header3.addButton(addNoteButton);
         header4.addButton(finishNoteButton);
-        borderPane.setTop(header3);
-        borderPane.setCenter(noteList);
+        borderPane.setTop(header1);
+        borderPane.setCenter(todoLists);
 
         //显示
         Scene scene = new Scene(borderPane);
@@ -123,6 +122,7 @@ public class HelloApplication extends Application {
         stage.show();
 
         //添加事件
+        //转到添加item界面
         addItemButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -130,6 +130,7 @@ public class HelloApplication extends Application {
                 borderPane.setTop(header2);
             }
         });
+        //转到list_item主页面
         confirmButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -137,7 +138,7 @@ public class HelloApplication extends Application {
                 borderPane.setTop(header1);
             }
         });
-
+        //转到添加笔记界面
         addNoteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -145,6 +146,7 @@ public class HelloApplication extends Application {
                 borderPane.setTop(header4);
             }
         });
+        //结束添加note界面
         finishNoteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {

@@ -26,9 +26,9 @@ public class Navigate extends AnchorPane {
         //基础设置
         setStyle("-fx-background-color: #FFFFFF");
 
-        buttons[0] = new NavigateButton("file:src/main/resources/com/example/calendar/images/todo.png",false);
+        buttons[0] = new NavigateButton("file:src/main/resources/com/example/calendar/images/todo.png",true);
         buttons[1] = new NavigateButton("file:src/main/resources/com/example/calendar/images/schedule.png",false);
-        buttons[2] = new NavigateButton("file:src/main/resources/com/example/calendar/images/notes.png",true);
+        buttons[2] = new NavigateButton("file:src/main/resources/com/example/calendar/images/notes.png",false);
 
         buttons[0].setLayoutX(0);
         buttons[1].setLayoutX(100);
