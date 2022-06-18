@@ -152,7 +152,9 @@ public class HelloApplication extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 System.out.println(todoDetail.getItem());
-                AllItem.add(todoDetail.getItem());
+                try {
+                    userOpController.addTodoItem(todoDetail.getItem(), AllItem);
+                }catch (Exception addError){System.out.println("添加事项外层异常");}
                 todoDetail=new TodoDetail();
                 todoLists=new TodoLists(AllItem);
                 borderPane.setCenter(todoLists);
