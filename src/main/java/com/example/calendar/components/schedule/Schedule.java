@@ -1,5 +1,6 @@
 package com.example.calendar.components.schedule;
 
+import com.example.calendar.components.CircleButton;
 import com.example.calendar.utils.TimePicker;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -13,15 +14,20 @@ import javafx.scene.effect.InnerShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
 import java.util.List;
+import java.util.Stack;
+
 
 /**
  * 课程表类.
@@ -103,6 +109,13 @@ public class Schedule extends AnchorPane {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
+        //导入按钮
+        CircleButton importButton = new CircleButton("file:src/main/resources/com/example/calendar/images/addButton.png");
+        importButton.setLayoutX(250);
+        importButton.setLayoutY(25);
+        importButton.setMinSize(25,25);
+        importButton.setOnAction(new FileChooseHandler());
+
 
         //网格面板样式
         for(int i=0;i<14;i++)
@@ -121,6 +134,9 @@ public class Schedule extends AnchorPane {
                 gridPane.add(Sitem,Sitem.x+1,Sitem.y,1,Sitem.h);
             }
         }
+
+
+        getChildren().addAll(weekIndexLabel,hBox,scrollPane,importButton);
     }
 
     /**
@@ -145,6 +161,17 @@ public class Schedule extends AnchorPane {
             scene.setFill(Color.TRANSPARENT);
             stage.setScene(scene);
             stage.showAndWait();
+        }
+    }
+
+    private class FileChooseHandler implements EventHandler{
+
+        @Override
+        public void handle(Event event) {
+            Stage stage = new Stage();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files","*.xls","*.xlsx"));
+            File excelFile = fileChooser.showOpenDialog(stage);
         }
     }
 
