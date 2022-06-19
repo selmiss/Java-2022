@@ -17,12 +17,10 @@ public class TodoItemController {
 
     public List<Item> ReadItemList()
     {
-        System.out.println("Start read item_list!");
         List<Item> items = new ArrayList<>();
         String root = System.getProperty("user.dir");
         String path = root + "/src/main/resources/data/itemData.xls";
         List<Item> todolist = new ArrayList<>();
-        System.out.println("path:"+path );
         try {
             FileInputStream in = new FileInputStream(path);
             HSSFWorkbook workbook = new HSSFWorkbook(in);
