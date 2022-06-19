@@ -4,6 +4,15 @@ public class Courseitem {
     private String content;
     private int start;
     private int end;
+    private int len;
+
+    public int getLen() {
+        return len;
+    }
+
+    public void setLen(int len) {
+        this.len = len;
+    }
 
     @Override
     public String toString() {

@@ -79,9 +79,10 @@ public class CourseController {
                     int start = wordAnalisys.Analysis(str).getStart(), end= wordAnalisys.Analysis(str).getEnd();
 //                    System.out.println("该元素的start:" + start + " 该元素的end:" + end);
                     String name = wordAnalisys.Analysis(str).getContent();
+                    int len = wordAnalisys.Analysis(str).getLen();
 //                    System.out.println("该元素的name:" + name);
                     if(start<=week && end>=week){
-                        arr.add(name);
+                        arr.add(name+" "+len);
                     }else {
                         arr.add("");
                     }
