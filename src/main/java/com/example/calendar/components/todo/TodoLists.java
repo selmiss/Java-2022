@@ -157,11 +157,11 @@ class TodoList extends VBox{
             if(type.equals("bad") && days <= 1 ){
                 item2 = new TodoItem(2,e, item_list);
             }
-            else if(type.equals("normal") && days>1 && days<=3)
+            else if(type.equals("normal") && days>1 && days<=6)
             {
                 item2 = new TodoItem(1,e, item_list);
             }
-            else if(type.equals("happy") && days > 3){
+            else if(type.equals("happy") && days > 6){
                 item2 = new TodoItem(0,e, item_list);
             }
             else continue;

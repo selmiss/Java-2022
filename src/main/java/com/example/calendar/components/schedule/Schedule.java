@@ -96,7 +96,6 @@ public class Schedule extends AnchorPane {
         {
             DateLabel dateLabel = new DateLabel(dayOfWeek.get(Calendar.MONTH)+1+"."+dayOfWeek.get(Calendar.DAY_OF_MONTH));
             dayOfWeek.add(Calendar.DAY_OF_YEAR,1);
-            Label label = new Label();
             hBox.getChildren().add(dateLabel);
         }
 
