@@ -108,17 +108,19 @@ class Note extends AnchorPane{
                 "-fx-font-size: 14;" +
                         "-fx-font-weight: normal");
 
-        //创建或修改时间
-        Label updateDate = new Label();
-        DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-        updateDate.setText(df.format(new Date()));
-        updateDate.setLayoutY(30);
-        updateDate.setLayoutX(60);
-        updateDate.setAlignment(Pos.CENTER);
-        updateDate.setStyle(
-                "-fx-font-size: 10;-fx-font-weight: normal");
+        //内容简介
+        String briefStr = idea.getContent();
+        briefStr = briefStr.replace('#','\0');
+        briefStr=briefStr.split("\n")[0];
+        Label brief = new Label(briefStr);
+        brief.setLayoutY(30);
+        brief.setLayoutX(60);
+        brief.setMaxWidth(100);
+        brief.setAlignment(Pos.CENTER);
+        brief.setStyle(
+                "-fx-font-size: 12;-fx-font-weight: normal");
 
-        updateDate.setTextFill(Color.valueOf("#31B02F"));
+        brief.setTextFill(Color.valueOf("#31B02F"));
 
 
         //删除按钮
@@ -127,6 +129,6 @@ class Note extends AnchorPane{
         deleteButton.setLayoutX(240);
         deleteButton.setLayoutY(10);
 
-        getChildren().addAll(noteButton,title,updateDate,deleteButton);
+        getChildren().addAll(noteButton,title,brief,deleteButton);
     }
 }

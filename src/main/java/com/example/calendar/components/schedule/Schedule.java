@@ -42,6 +42,7 @@ public class Schedule extends AnchorPane {
     ScrollPane scrollPane = new ScrollPane();//滚动容器
     HBox hBox = new HBox();//水平盒容器
     Label weekIndexLabel = new Label();//显示周数的标签
+    int index=-1;//当前周数
     public Schedule(){
         //设置学期起始日期
         try {
@@ -56,7 +57,13 @@ public class Schedule extends AnchorPane {
         weekIndexLabel.setPrefHeight(30);
         weekIndexLabel.setLayoutX(75);
         weekIndexLabel.setLayoutY(20);
-        weekIndexLabel.setText(weeks[nowCalendar.get(Calendar.WEEK_OF_YEAR)-startCalendar.get(Calendar.WEEK_OF_YEAR)]);
+        if(nowCalendar.get(Calendar.DAY_OF_WEEK)==1)
+        {
+            index = nowCalendar.get(Calendar.WEEK_OF_YEAR)-startCalendar.get(Calendar.WEEK_OF_YEAR)-1;
+        }
+        else
+            index = nowCalendar.get(Calendar.WEEK_OF_YEAR)-startCalendar.get(Calendar.WEEK_OF_YEAR);
+        weekIndexLabel.setText(weeks[index]);
         weekIndexLabel.setAlignment(Pos.CENTER);
         weekIndexLabel.setStyle("-fx-background-color: #ffffff;" +
                 "-fx-background-radius: 15;" +
@@ -71,7 +78,8 @@ public class Schedule extends AnchorPane {
         hBox.setPrefWidth(280);
         hBox.setEffect(new InnerShadow(2,0,1,Color.rgb(0,0,0,0.3)));
         Calendar dayOfWeek = Calendar.getInstance();
-        dayOfWeek.add(Calendar.DAY_OF_YEAR,-nowCalendar.get(Calendar.DAY_OF_WEEK)+1);
+        dayOfWeek.add(Calendar.DAY_OF_YEAR,-(nowCalendar.get(Calendar.DAY_OF_WEEK)+6)%8+1);
+        System.out.println("今天是"+nowCalendar.get(Calendar.DAY_OF_WEEK));
         DateLabel empty = new DateLabel("");
         empty.setPrefWidth(30);
         hBox.getChildren().add(empty);
@@ -123,7 +131,7 @@ public class Schedule extends AnchorPane {
         public void handle(Event event) {
             Label src = (Label)event.getSource();
 
-            WeekPicker weekPicker = new WeekPicker(src);
+            WeekPicker weekPicker = new WeekPicker(src,hBox,index);
             Stage stage = new Stage();
             stage.setX(1110);
             stage.setY(420);

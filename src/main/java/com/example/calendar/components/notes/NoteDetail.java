@@ -64,14 +64,18 @@ public class NoteDetail extends AnchorPane {
         title.setLayoutX(20);
         title.setLayoutY(20);
         title.setAlignment(Pos.CENTER);
+        title.setText("添加标题");
         title.addEventHandler(MouseDragEvent.MOUSE_CLICKED,new TitleEventHandler());
         title.setStyle("-fx-background-color: #F1F1F1;" +
                 "-fx-background-radius: 15;" +
                 "-fx-font-size: 14;");
 
         //md编辑器
+        Parser parser = Parser.builder().build();
+        Node document = parser.parse("添加内容");
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
         WebView webView = new WebView();
-        webView.getEngine().load("");
+        webView.getEngine().loadContent(renderer.render(document));
         webView.setPrefWidth(240);
         webView.setPrefHeight(300);
         webView.addEventHandler(MouseDragEvent.MOUSE_CLICKED,new MdEventHandler());

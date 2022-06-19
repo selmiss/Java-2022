@@ -13,6 +13,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * 周数选择器.
  * @author 郭一帆
@@ -21,8 +26,12 @@ import javafx.stage.Stage;
  */
 public class WeekPicker extends ScrollPane {
     Label src;
-    public WeekPicker(Label src){
+    HBox hBox;
+    int index;
+    public WeekPicker(Label src,HBox hBox,int index){
         this.src = src;
+        this.hBox = hBox;
+        this.index = index;
 
         setHbarPolicy(ScrollBarPolicy.NEVER);
         setVbarPolicy(ScrollBarPolicy.NEVER);
@@ -32,8 +41,10 @@ public class WeekPicker extends ScrollPane {
         VBox vBox = new VBox();
         vBox.setPrefHeight(150);
         vBox.setSpacing(10);
+        int i=0;
         for(String s: Schedule.weeks){
-            Label label = new Label();
+            WeekLabel label = new WeekLabel();
+            label.setIndex(i);
             label.setText(s);
             label.setAlignment(Pos.CENTER);
             label.setPrefWidth(280);
@@ -43,11 +54,26 @@ public class WeekPicker extends ScrollPane {
             label.setOnMouseEntered(new MouseEnterHandler());
             label.setOnMouseExited(new MouseExitHandler());
             vBox.getChildren().add(label);
+            i++;
         }
 
         setContent(vBox);
     }
 
+    /**
+     *
+     */
+    private class WeekLabel extends Label{
+        int index;
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
+    }
     /**
      * 处理标签点击事件.
      * @author 郭一帆
@@ -58,8 +84,29 @@ public class WeekPicker extends ScrollPane {
 
         @Override
         public void handle(Event event) {
-            Label selectedLabel = (Label)event.getSource();
+            WeekLabel selectedLabel = (WeekLabel)event.getSource();
             src.setText(selectedLabel.getText());
+            hBox.getChildren().clear();
+            index = selectedLabel.getIndex();
+
+
+            Calendar dayOfWeek = Calendar.getInstance();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                dayOfWeek.setTime(df.parse("2022-02-28"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            dayOfWeek.add(Calendar.WEEK_OF_YEAR,index);
+            DateLabel empty = new DateLabel("");
+            empty.setPrefWidth(30);
+            hBox.getChildren().add(empty);
+            for(int i=0;i<7;i++)
+            {
+                DateLabel dateLabel = new DateLabel(dayOfWeek.get(Calendar.MONTH)+1+"."+dayOfWeek.get(Calendar.DAY_OF_MONTH));
+                dayOfWeek.add(Calendar.DAY_OF_YEAR,1);
+                hBox.getChildren().add(dateLabel);
+            }
 
             Stage stage = (Stage)getScene().getWindow();
             stage.close();
