@@ -8,6 +8,7 @@ import com.example.calendar.components.notes.NoteList;
 import com.example.calendar.components.schedule.Schedule;
 import com.example.calendar.components.todo.TodoDetail;
 import com.example.calendar.components.todo.TodoLists;
+import com.example.calendar.controller.CourseController;
 import com.example.calendar.controller.IdeaController;
 import com.example.calendar.controller.TodoItemController;
 import com.example.calendar.controller.UserOpController;
@@ -65,12 +66,14 @@ public class HelloApplication extends Application {
     CircleButton confirmButton = new CircleButton("file:src/main/resources/com/example/calendar/images/arrow.png");
     CircleButton addNoteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/addButton.png");
     CircleButton finishNoteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/arrow.png");
-
+    CircleButton backTodoButton = new CircleButton("file:src/main/resources/com/example/calendar/images/back.png");
+    CircleButton backNoteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/back.png");
 
     // 全局变量添加
     // 控制类添加
     UserOpController userOpController = new UserOpController();
     IdeaController ideaController = new IdeaController();
+    CourseController courseController = new CourseController();
 
 
     /**
@@ -98,6 +101,7 @@ public class HelloApplication extends Application {
         AllIdea = ideaController.ReadIdeaList();//初始化idea list
         noteList = new NoteList(AllIdea);
 
+        /** 测试1 **/
         try{
 //            Item item = new Item(10, "数据库考试", "my content", new Date(2022, 06, 01), 0, 17);
 //            userOpController.addTodoItem(item, AllItem);
@@ -108,11 +112,15 @@ public class HelloApplication extends Application {
 //                System.out.println("ID:" + testlist.get(i).getId() + "标题:" + testlist.get(i).getTitle() + "时间:" + testlist.get(i).getDate().toString());
 //            }
 //            ideaController.ReadIdeaList();
-            Idea idea = new Idea(5, "标题5", "内容5", new Date(2022, 06, 01));
-            userOpController.addIdea(idea, AllIdea);
-            ideaController.ReadIdeaList();
+//            Idea idea = new Idea(5, "标题5", "内容5", new Date(2022, 06, 01));
+//            userOpController.addIdea(idea, AllIdea);
+//            ideaController.ReadIdeaList();
         }catch (Exception e){System.out.println("userControllerError!");}
-
+        /** 测试2 **/
+        try{
+            List<List<String>> testlist = courseController.getCourseList();
+            courseController.courseRead(testlist);
+        }catch (Exception e){System.out.println("CouseControllerError");}
         //当点击文本框以外的地方时转移焦点，从而使得文本框可以通过判断焦点失去事件而移除
         borderPane.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
@@ -125,11 +133,13 @@ public class HelloApplication extends Application {
         //添加控件
         borderPane.setBottom(navigate);
         header1.addButton(addItemButton);
-        header2.addButton(confirmButton);
+        header2.addButton(backTodoButton,confirmButton);
         header3.addButton(addNoteButton);
-        header4.addButton(finishNoteButton);
+        header4.addButton(backNoteButton,finishNoteButton);
         borderPane.setTop(header1);
         borderPane.setCenter(todoLists);
+        todoLists.setPaneAndDetail(borderPane,todoDetail,header2);
+
 
         //显示
         Scene scene = new Scene(borderPane);
@@ -151,12 +161,18 @@ public class HelloApplication extends Application {
             public void handle(ActionEvent actionEvent) {
                 System.out.println(todoDetail.getItem());
                 try {
+                    if(todoDetail.getItemId()==-1)
                     userOpController.addTodoItem(todoDetail.getItem(), AllItem);
+                    else{
+                        userOpController.deleteTodoItem(todoDetail.getItem(),AllItem);
+                        userOpController.addTodoItem(todoDetail.getItem(),AllItem);
+                    }
                 }catch (Exception addError){System.out.println("添加事项外层异常");}
                 todoDetail=new TodoDetail();
                 todoLists=new TodoLists(AllItem);
                 borderPane.setCenter(todoLists);
                 borderPane.setTop(header1);
+                todoLists.setPaneAndDetail(borderPane,todoDetail,header2);
             }
         });
         //转到添加笔记界面
@@ -177,6 +193,24 @@ public class HelloApplication extends Application {
                 }catch (Exception addError){System.out.println("添加事项外层异常");}
                 noteDetail = new NoteDetail();
                 noteList = new NoteList(AllIdea);
+                borderPane.setCenter(noteList);
+                borderPane.setTop(header3);
+            }
+        });
+
+        //返回todo列表
+        backTodoButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                borderPane.setCenter(todoLists);
+                borderPane.setTop(header1);
+            }
+        });
+
+        //返回note列表
+        backNoteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
                 borderPane.setCenter(noteList);
                 borderPane.setTop(header3);
             }
