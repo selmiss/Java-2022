@@ -1,5 +1,6 @@
 package com.example.calendar.components.notes;
 
+import com.example.calendar.Entity.Idea;
 import com.example.calendar.components.todo.TodoDetail;
 import com.example.calendar.utils.MyShadow;
 import javafx.beans.value.ChangeListener;
@@ -31,6 +32,16 @@ import org.commonmark.renderer.html.HtmlRenderer;
 public class NoteDetail extends AnchorPane {
     private AnchorPane noteContent = new AnchorPane();
     private Label title = new Label();
+    private Idea idea = new Idea();
+
+    public Idea getIdea() {
+        return idea;
+    }
+
+    public void setIdea(Idea idea) {
+        this.idea = idea;
+    }
+
     public NoteDetail(){
         //基础设置
         noteContent.setPrefWidth(280);
@@ -53,7 +64,7 @@ public class NoteDetail extends AnchorPane {
         title.setLayoutX(20);
         title.setLayoutY(20);
         title.setAlignment(Pos.CENTER);
-        title.addEventHandler(MouseDragEvent.MOUSE_CLICKED,new TextEventHandler());
+        title.addEventHandler(MouseDragEvent.MOUSE_CLICKED,new TitleEventHandler());
         title.setStyle("-fx-background-color: #F1F1F1;" +
                 "-fx-background-radius: 15;" +
                 "-fx-font-size: 14;");
@@ -105,6 +116,7 @@ public class NoteDetail extends AnchorPane {
                     {
                         Parser parser = Parser.builder().build();
                         Node document = parser.parse(textArea.getText());
+                        idea.setContent(textArea.getText());
                         HtmlRenderer renderer = HtmlRenderer.builder().build();
                         src.getEngine().loadContent(renderer.render(document));
                         noteContent.getChildren().remove(textArea);
@@ -151,6 +163,44 @@ public class NoteDetail extends AnchorPane {
                     if(oldValue&&!newValue)
                     {
                         src.setText(textArea.getText());
+                        idea.setContent(src.getText());
+                        noteContent.getChildren().remove(textArea);
+                    }
+
+                }
+            });
+
+            noteContent.getChildren().add(textArea);
+        }
+    }
+    private class TitleEventHandler implements EventHandler {
+
+        @Override
+        public void handle(Event event) {
+            Object source = event.getSource();
+            Label src = (Label)source;
+            TextArea textArea = new TextArea();
+            //基础设置
+            textArea.setWrapText(true);
+            //用输入框覆盖标签
+            textArea.setMinSize(90,20);
+            textArea.setPrefWidth(src.getPrefWidth()-12);
+            textArea.setPrefHeight(src.getPrefHeight()-12);
+            textArea.setLayoutY(src.getLayoutY()+6);
+            textArea.setLayoutX(src.getLayoutX()+6);
+            textArea.setStyle(
+                    src.getStyle());
+            textArea.setText(src.getText());
+            textArea.selectAll();
+
+            //失去焦点时消失事件
+            textArea.focusedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+                    if(oldValue&&!newValue)
+                    {
+                        src.setText(textArea.getText());
+                        idea.setTitle(src.getText());
                         noteContent.getChildren().remove(textArea);
                     }
 
