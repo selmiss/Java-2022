@@ -15,12 +15,10 @@ import java.util.List;
 
 public class IdeaController {
     public List<Idea> ReadIdeaList(){
-        System.out.println("Start read idea_list!");
         List<Idea> ideas = new ArrayList<>();
         String root = System.getProperty("user.dir");
         String path = root + "/src/main/resources/data/ideaData.xls";
         List<Idea> todolist = new ArrayList<>();
-        System.out.println("path:"+path );
         try {
             FileInputStream in = new FileInputStream(path);
             HSSFWorkbook workbook = new HSSFWorkbook(in);

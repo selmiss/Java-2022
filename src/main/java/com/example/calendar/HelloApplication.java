@@ -94,8 +94,8 @@ public class HelloApplication extends Application {
 
         // 控制类测试
         System.out.println("Start our program!");
-        AllItem = todoItemController.ReadItemList(); //初始化list
-        todoLists = new TodoLists(AllItem);
+//        AllItem = todoItemController.ReadItemList(); //初始化list
+//        todoLists = new TodoLists(AllItem);
 
         AllIdea = ideaController.ReadIdeaList();//初始化idea list
         noteList = new NoteList(AllIdea);
@@ -105,24 +105,9 @@ public class HelloApplication extends Application {
 
         /** 测试1 **/
         try{
-//            Item item = new Item(10, "数据库考试", "my content", new Date(2022, 06, 01), 0, 17);
-//            userOpController.addTodoItem(item, AllItem);
-//            userOpController.deleteTodoItem(item, AllItem);
-//            userOpController.addTodoItemList(todoItemController.ReadItemList());
-//            List<Item> testlist = userOpController.sortedItemList(AllItem);
-//            for(int i = 0;i<testlist.size();i++){
-//                System.out.println("ID:" + testlist.get(i).getId() + "标题:" + testlist.get(i).getTitle() + "时间:" + testlist.get(i).getDate().toString());
-//            }
-//            ideaController.ReadIdeaList();
-//            Idea idea = new Idea(5, "标题5", "内容5", new Date(2022, 06, 01));
-//            userOpController.addIdea(idea, AllIdea);
-//            ideaController.ReadIdeaList();
         }catch (Exception e){System.out.println("userControllerError!");}
         /** 测试2 **/
         try{
-//            List<List<String>> testlist = courseController.getCourseList();
-//            courseController.courseRead(testlist);
-
              AllCourse = courseController.getAllCourseList();
             courseController.courseAllRead(AllCourse);
         }catch (Exception e){System.out.println("CouseControllerError");}
