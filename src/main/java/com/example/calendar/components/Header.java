@@ -61,6 +61,30 @@ public class Header extends AnchorPane {
         });
         this.getChildren().add(newButton);
     }
+
+    /**
+     * 在header上添加按钮.
+     * <p>由于在不同页面上header右侧的按钮功能不同，因此每次切换页面都需要一并切换右侧的按钮.</p>
+     * @param newButton1 标题栏右侧第一个按钮
+     * @param newButton2 标题栏右侧第二个按钮
+     */
+    public void addButton(CircleButton newButton1,CircleButton newButton2){
+        newButton1.setLayoutX(220);
+        newButton1.setLayoutY(52);
+        newButton1.setMinSize(25,25);
+        newButton2.setLayoutX(250);
+        newButton2.setLayoutY(52);
+        newButton2.setMinSize(25,25);
+        this.getChildren().forEach(new Consumer<Node>() {
+            @Override
+            public void accept(Node node) {
+                if(node instanceof CircleButton)
+                    getChildren().remove(node);
+            }
+        });
+        this.getChildren().addAll(newButton1,newButton2);
+    }
+
 }
 
 /**

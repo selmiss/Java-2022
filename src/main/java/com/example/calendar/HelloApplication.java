@@ -65,7 +65,8 @@ public class HelloApplication extends Application {
     CircleButton confirmButton = new CircleButton("file:src/main/resources/com/example/calendar/images/arrow.png");
     CircleButton addNoteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/addButton.png");
     CircleButton finishNoteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/arrow.png");
-
+    CircleButton backTodoButton = new CircleButton("file:src/main/resources/com/example/calendar/images/back.png");
+    CircleButton backNoteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/back.png");
 
     // 全局变量添加
     // 控制类添加
@@ -127,11 +128,13 @@ public class HelloApplication extends Application {
         //添加控件
         borderPane.setBottom(navigate);
         header1.addButton(addItemButton);
-        header2.addButton(confirmButton);
+        header2.addButton(backTodoButton,confirmButton);
         header3.addButton(addNoteButton);
-        header4.addButton(finishNoteButton);
+        header4.addButton(backNoteButton,finishNoteButton);
         borderPane.setTop(header1);
         borderPane.setCenter(todoLists);
+        todoLists.setPaneAndDetail(borderPane,todoDetail,header2);
+
 
         //显示
         Scene scene = new Scene(borderPane);
@@ -153,12 +156,18 @@ public class HelloApplication extends Application {
             public void handle(ActionEvent actionEvent) {
                 System.out.println(todoDetail.getItem());
                 try {
+                    if(todoDetail.getItemId()==-1)
                     userOpController.addTodoItem(todoDetail.getItem(), AllItem);
+                    else{
+                        userOpController.deleteTodoItem(todoDetail.getItem(),AllItem);
+                        userOpController.addTodoItem(todoDetail.getItem(),AllItem);
+                    }
                 }catch (Exception addError){System.out.println("添加事项外层异常");}
                 todoDetail=new TodoDetail();
                 todoLists=new TodoLists(AllItem);
                 borderPane.setCenter(todoLists);
                 borderPane.setTop(header1);
+                todoLists.setPaneAndDetail(borderPane,todoDetail,header2);
             }
         });
         //转到添加笔记界面
@@ -171,6 +180,24 @@ public class HelloApplication extends Application {
         });
         //结束添加note界面
         finishNoteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                borderPane.setCenter(noteList);
+                borderPane.setTop(header3);
+            }
+        });
+
+        //返回todo列表
+        backTodoButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                borderPane.setCenter(todoLists);
+                borderPane.setTop(header1);
+            }
+        });
+
+        //返回note列表
+        backNoteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 borderPane.setCenter(noteList);
