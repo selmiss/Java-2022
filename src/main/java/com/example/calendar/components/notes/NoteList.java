@@ -2,6 +2,7 @@ package com.example.calendar.components.notes;
 
 import com.example.calendar.Entity.Idea;
 import com.example.calendar.components.CircleButton;
+import com.example.calendar.components.Header;
 import com.example.calendar.controller.UserOpController;
 import com.example.calendar.utils.MyShadow;
 import javafx.event.ActionEvent;
@@ -10,6 +11,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -18,6 +21,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * 笔记列表类.
@@ -27,9 +31,13 @@ import java.util.List;
  */
 public class NoteList extends AnchorPane
 {
+    BorderPane borderPane = null;
+    NoteDetail noteDetail = null;
+    Header header = null;
     HBox notesNavigate = new HBox();//选择显示笔记的创建时间
     ScrollPane scrollPane = new ScrollPane();
     VBox notesBox = new VBox();
+    Stack<Note> noteStack = new Stack<>();
     UserOpController userOpController= new UserOpController();
     public NoteList(List<Idea> idea_list){
         //基础设置
@@ -63,12 +71,30 @@ public class NoteList extends AnchorPane
                 }
             });
             notesBox.getChildren().add(idea1);
+            noteStack.add(idea1);
         }
 
 
         scrollPane.setContent(notesBox);
 
         getChildren().add(scrollPane);
+    }
+
+    public void setPaneAndDetail(BorderPane borderPane , NoteDetail noteDetail, Header header){
+        this.borderPane = borderPane;
+        this.noteDetail = noteDetail;
+        this.header = header;
+        for(Note noteItem :noteStack){
+            noteItem.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    noteDetail.setIdea(noteItem.getIdea());
+                    borderPane.setCenter(noteDetail);
+                    borderPane.setTop(header);
+                }
+            });
+        }
+
     }
 }
 
@@ -81,7 +107,16 @@ public class NoteList extends AnchorPane
 class Note extends AnchorPane{
     CircleButton noteButton;
     CircleButton deleteButton;
+    Idea idea;
+    public Idea getIdea() {
+        return idea;
+    }
+
+    public void setIdea(Idea idea) {
+        this.idea = idea;
+    }
     public Note(Idea idea){
+        this.idea = idea;
         //基础设置
         setPrefWidth(100);
         setPrefHeight(50);

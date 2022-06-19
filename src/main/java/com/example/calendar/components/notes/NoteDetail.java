@@ -25,6 +25,7 @@ import org.commonmark.renderer.html.HtmlRenderer;
 
 /**
  * 笔记详细类.
+ * 
  * @author 郭一帆
  * @version 1.0
  * @since 2022-6-16
@@ -33,17 +34,32 @@ public class NoteDetail extends AnchorPane {
     private AnchorPane noteContent = new AnchorPane();
     private Label title = new Label();
     private Idea idea = new Idea();
+    private String content = "添加内容";
+    private WebView webView = new WebView();
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    private int itemId = -1;
 
     public Idea getIdea() {
         return idea;
     }
 
     public void setIdea(Idea idea) {
+        this.title.setText(idea.getTitle());
+        this.content = idea.getContent();
+        this.itemId = idea.getId();
         this.idea = idea;
+        Parser parser = Parser.builder().build();
+        Node document = parser.parse(this.content);
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        webView.getEngine().loadContent(renderer.render(document));
     }
 
-    public NoteDetail(){
-        //基础设置
+    public NoteDetail() {
+        // 基础设置
         noteContent.setPrefWidth(280);
         noteContent.setPrefHeight(380);
         noteContent.setLayoutX(10);
@@ -51,73 +67,74 @@ public class NoteDetail extends AnchorPane {
         noteContent.setStyle("-fx-background-color: #FFFFFF;" +
                 "-fx-background-radius: 40");
 
-        //添加阴影
-        DropShadow shadow = new DropShadow ();
+        // 添加阴影
+        DropShadow shadow = new DropShadow();
         shadow.setBlurType(BlurType.GAUSSIAN);
-        shadow.setColor(Color.rgb(0,0,0,0.1));
+        shadow.setColor(Color.rgb(0, 0, 0, 0.1));
         shadow.setRadius(8);
         noteContent.setEffect(shadow);
 
-        //标题
+        // 标题
         title.setPrefWidth(240);
         title.setPrefHeight(40);
         title.setLayoutX(20);
         title.setLayoutY(20);
         title.setAlignment(Pos.CENTER);
         title.setText("添加标题");
-        title.addEventHandler(MouseDragEvent.MOUSE_CLICKED,new TitleEventHandler());
+        title.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new TitleEventHandler());
         title.setStyle("-fx-background-color: #F1F1F1;" +
                 "-fx-background-radius: 15;" +
                 "-fx-font-size: 14;");
 
-        //md编辑器
+        // md编辑器
         Parser parser = Parser.builder().build();
-        Node document = parser.parse("添加内容");
+        Node document = parser.parse(this.content);
         HtmlRenderer renderer = HtmlRenderer.builder().build();
-        WebView webView = new WebView();
         webView.getEngine().loadContent(renderer.render(document));
         webView.setPrefWidth(240);
         webView.setPrefHeight(300);
-        webView.addEventHandler(MouseDragEvent.MOUSE_CLICKED,new MdEventHandler());
+        webView.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new MdEventHandler());
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.getStylesheets().add("file:src/main/resources/com/example/calendar/css/scroll.css");
-        scrollPane.setBackground(new Background(new BackgroundFill(Color.web("#F1F9EE"), CornerRadii.EMPTY, Insets.EMPTY)));
+        scrollPane.setBackground(
+                new Background(new BackgroundFill(Color.web("#F1F9EE"), CornerRadii.EMPTY, Insets.EMPTY)));
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setContent(webView);
         scrollPane.setLayoutX(20);
         scrollPane.setLayoutY(70);
 
-        noteContent.getChildren().addAll(title,scrollPane);
+        noteContent.getChildren().addAll(title, scrollPane);
 
         getChildren().add(noteContent);
     }
 
-    private class MdEventHandler implements  EventHandler{
+    private class MdEventHandler implements EventHandler {
         @Override
         public void handle(Event event) {
             Object source = event.getSource();
-            WebView src = (WebView)source;
+            WebView src = (WebView) source;
             TextArea textArea = new TextArea();
-            //基础设置
+            textArea.setText(content);
+            // 基础设置
             textArea.setWrapText(true);
-            //用输入框覆盖标签
-            textArea.setMinSize(90,20);
-            textArea.setPrefWidth(src.getPrefWidth()-12);
-            textArea.setPrefHeight(src.getPrefHeight()-12);
+            // 用输入框覆盖标签
+            textArea.setMinSize(90, 20);
+            textArea.setPrefWidth(src.getPrefWidth() - 12);
+            textArea.setPrefHeight(src.getPrefHeight() - 12);
             textArea.setLayoutY(65);
             textArea.setLayoutX(26);
             textArea.setStyle(
                     src.getStyle());
             textArea.selectAll();
 
-            //失去焦点时消失事件
+            // 失去焦点时消失事件
             textArea.focusedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
-                public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-                    if(oldValue&&!newValue)
-                    {
+                public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue,
+                        Boolean newValue) {
+                    if (oldValue && !newValue) {
                         Parser parser = Parser.builder().build();
                         Node document = parser.parse(textArea.getText());
                         idea.setContent(textArea.getText());
@@ -135,7 +152,10 @@ public class NoteDetail extends AnchorPane {
 
     /**
      * 文本标签点击事件处理类.
-     * <p>点击标签后出现文本输入框，将标签文本改变为输入框内容.</p>
+     * <p>
+     * 点击标签后出现文本输入框，将标签文本改变为输入框内容.
+     * </p>
+     * 
      * @author 郭一帆
      * @version 1.0
      * @since 2022-6-16
@@ -145,27 +165,27 @@ public class NoteDetail extends AnchorPane {
         @Override
         public void handle(Event event) {
             Object source = event.getSource();
-            Label src = (Label)source;
+            Label src = (Label) source;
             TextArea textArea = new TextArea();
-            //基础设置
+            // 基础设置
             textArea.setWrapText(true);
-            //用输入框覆盖标签
-            textArea.setMinSize(90,20);
-            textArea.setPrefWidth(src.getPrefWidth()-12);
-            textArea.setPrefHeight(src.getPrefHeight()-12);
-            textArea.setLayoutY(src.getLayoutY()+6);
-            textArea.setLayoutX(src.getLayoutX()+6);
+            // 用输入框覆盖标签
+            textArea.setMinSize(90, 20);
+            textArea.setPrefWidth(src.getPrefWidth() - 12);
+            textArea.setPrefHeight(src.getPrefHeight() - 12);
+            textArea.setLayoutY(src.getLayoutY() + 6);
+            textArea.setLayoutX(src.getLayoutX() + 6);
             textArea.setStyle(
                     src.getStyle());
             textArea.setText(src.getText());
             textArea.selectAll();
 
-            //失去焦点时消失事件
+            // 失去焦点时消失事件
             textArea.focusedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
-                public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-                    if(oldValue&&!newValue)
-                    {
+                public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue,
+                        Boolean newValue) {
+                    if (oldValue && !newValue) {
                         src.setText(textArea.getText());
                         idea.setContent(src.getText());
                         noteContent.getChildren().remove(textArea);
@@ -177,32 +197,33 @@ public class NoteDetail extends AnchorPane {
             noteContent.getChildren().add(textArea);
         }
     }
+
     private class TitleEventHandler implements EventHandler {
 
         @Override
         public void handle(Event event) {
             Object source = event.getSource();
-            Label src = (Label)source;
+            Label src = (Label) source;
             TextArea textArea = new TextArea();
-            //基础设置
+            // 基础设置
             textArea.setWrapText(true);
-            //用输入框覆盖标签
-            textArea.setMinSize(90,20);
-            textArea.setPrefWidth(src.getPrefWidth()-12);
-            textArea.setPrefHeight(src.getPrefHeight()-12);
-            textArea.setLayoutY(src.getLayoutY()+6);
-            textArea.setLayoutX(src.getLayoutX()+6);
+            // 用输入框覆盖标签
+            textArea.setMinSize(90, 20);
+            textArea.setPrefWidth(src.getPrefWidth() - 12);
+            textArea.setPrefHeight(src.getPrefHeight() - 12);
+            textArea.setLayoutY(src.getLayoutY() + 6);
+            textArea.setLayoutX(src.getLayoutX() + 6);
             textArea.setStyle(
                     src.getStyle());
             textArea.setText(src.getText());
             textArea.selectAll();
 
-            //失去焦点时消失事件
+            // 失去焦点时消失事件
             textArea.focusedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
-                public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-                    if(oldValue&&!newValue)
-                    {
+                public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue,
+                        Boolean newValue) {
+                    if (oldValue && !newValue) {
                         src.setText(textArea.getText());
                         idea.setTitle(src.getText());
                         noteContent.getChildren().remove(textArea);

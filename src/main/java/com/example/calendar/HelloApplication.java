@@ -144,6 +144,7 @@ public class HelloApplication extends Application {
         borderPane.setTop(header1);
         borderPane.setCenter(todoLists);
         todoLists.setPaneAndDetail(borderPane,todoDetail,header2);
+        noteList.setPaneAndDetail(borderPane,noteDetail,header4);
 
 
         //显示
@@ -194,12 +195,19 @@ public class HelloApplication extends Application {
             public void handle(ActionEvent actionEvent) {
                 System.out.println(noteDetail.getIdea().toString());
                 try {
-                    userOpController.addIdea(noteDetail.getIdea(), AllIdea);
+                    if(noteDetail.getItemId()==-1)
+                        userOpController.addIdea(noteDetail.getIdea(), AllIdea);
+                    else{
+                        userOpController.deleteIdea(noteDetail.getIdea(), AllIdea);
+                        userOpController.addIdea(noteDetail.getIdea(), AllIdea);
+                    }
+
                 }catch (Exception addError){System.out.println("添加事项外层异常");}
                 noteDetail = new NoteDetail();
                 noteList = new NoteList(AllIdea);
                 borderPane.setCenter(noteList);
                 borderPane.setTop(header3);
+                noteList.setPaneAndDetail(borderPane,noteDetail,header4);
             }
         });
 
