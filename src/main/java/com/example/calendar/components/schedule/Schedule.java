@@ -179,7 +179,7 @@ public class Schedule extends AnchorPane {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files","*.xls","*.xlsx"));
             File excelFile = fileChooser.showOpenDialog(stage);
-            //updateController.updateCourse(excelFile);
+            updateController.update(excelFile);
         }
     }
 

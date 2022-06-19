@@ -1,8 +1,6 @@
 package com.example.calendar.controller;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,5 +21,27 @@ public class UpdateController {
             fw.close();
             fr.close();//关流很重要
         }catch (Exception e){System.out.println("文件路径错误");e.printStackTrace();}
+    }
+    public void update(File in)
+    {
+        String root = System.getProperty("user.dir");
+
+        try {
+            FileInputStream fis  = new FileInputStream(in);
+            File f2 = new File(root+"/src/main/resources/data/courseData.xls");
+            FileOutputStream fos = new FileOutputStream(f2);
+            byte[] buf = new byte[1024*1024];
+            int i = 0;
+            while ((i = fis.read(buf)) != -1) {
+                fos.write(buf, 0, i);
+            }
+            if (fis != null) fis.close();
+            if (fos != null) fos.close();
+        }
+        catch (Exception e) {System.out.println("传入文件失败");
+        }
+        finally {
+
+        }
     }
 }
