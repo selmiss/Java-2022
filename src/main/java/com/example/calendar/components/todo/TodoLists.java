@@ -1,7 +1,9 @@
 package com.example.calendar.components.todo;
 
 import com.example.calendar.Entity.Item;
+import com.example.calendar.HelloApplication;
 import com.example.calendar.components.CircleButton;
+import com.example.calendar.components.Header;
 import com.example.calendar.controller.UserOpController;
 import com.example.calendar.utils.MyShadow;
 import javafx.animation.TranslateTransition;
@@ -57,11 +59,17 @@ public class TodoLists extends ScrollPane {
 
         vBox.setPadding(new Insets(0,5,20,10));
         vBox.setBackground(new Background(new BackgroundFill(Color.web("#F1F9EE"), CornerRadii.EMPTY, Insets.EMPTY)));
-        TodoList badTodoList = new TodoList("bad",item_arr);
-        TodoList normalTodoList = new TodoList("normal",item_arr);
-        TodoList happyTodoList = new TodoList("happy",item_arr);
+        badTodoList = new TodoList("bad",item_arr);
+        normalTodoList = new TodoList("normal",item_arr);
+        happyTodoList = new TodoList("happy",item_arr);
         vBox.getChildren().addAll(badTodoList,normalTodoList,happyTodoList);
         this.setContent(vBox);
+    }
+
+    public void setPaneAndDetail(BorderPane borderPane , TodoDetail todoDetail, Header header){
+        badTodoList.setPaneAndDetail(borderPane, todoDetail, header);
+        normalTodoList.setPaneAndDetail(borderPane, todoDetail, header);
+        happyTodoList.setPaneAndDetail(borderPane, todoDetail, header);
     }
 }
 
@@ -72,6 +80,11 @@ public class TodoLists extends ScrollPane {
  * @since 2022-6-13
  */
 class TodoList extends VBox{
+
+    BorderPane borderPane = null;
+    TodoDetail todoDetail = null;
+    Header header = null;
+
     public Stack<TodoItem> itemStack;
     private boolean isCollected=false;
     UserOpController userOpController = new UserOpController();
@@ -187,16 +200,24 @@ class TodoList extends VBox{
                     itemStack.remove(item2);
                 }
             });
-            item2.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    System.out.println("该切换了");
-                }
-            });
             itemStack.add(item2);
             getChildren().add(item2);
         }
-
+    }
+    public void setPaneAndDetail(BorderPane borderPane ,TodoDetail todoDetail,Header header ){
+        this.borderPane = borderPane;
+        this.todoDetail = todoDetail;
+        this.header = header;
+        for(TodoItem todoItem :itemStack){
+            todoItem.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    todoDetail.setItem(todoItem.getItem());
+                    borderPane.setCenter(todoDetail);
+                    borderPane.setTop(header);
+                }
+            });
+        }
 
     }
 }
@@ -211,8 +232,10 @@ class TodoItem extends AnchorPane{
     private int state=0;
     CircleButton finishButton;
     CircleButton deleteButton;
+    private Item item;
     public TodoItem(int st, Item item, List<Item> item_list){
         this.state = st;
+        this.item = item;
         //基础设置
         setPrefWidth(100);
         setPrefHeight(50);
@@ -244,6 +267,7 @@ class TodoItem extends AnchorPane{
         String item_title = item.getTitle();
         Label title = new Label(item_title);
         title.setLayoutY(10);
+        title.setMaxWidth(100);
         title.setLayoutX(60);
         title.setAlignment(Pos.CENTER);
         title.setStyle(
@@ -275,7 +299,8 @@ class TodoItem extends AnchorPane{
         //剩余时间
         CountDown countDown = new CountDown(ddl);
         countDown.setLayoutY(10);
-        countDown.setLayoutX(190);
+        countDown.setLayoutX(170);
+        countDown.setMaxWidth(70);
         countDown.setAlignment(Pos.CENTER);
         countDown.setStyle(
                 "-fx-font-size: 25;" +
@@ -310,6 +335,10 @@ class TodoItem extends AnchorPane{
         deleteButton.setLayoutY(10);
 
         getChildren().addAll(finishButton,title,ddl,countDown,deleteButton);
+    }
+
+    public Item getItem() {
+        return item;
     }
 }
 

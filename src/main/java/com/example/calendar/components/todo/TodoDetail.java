@@ -41,7 +41,9 @@ public class TodoDetail extends AnchorPane {
     private Label title = new Label("添加标题");
     private Label ddl = new Label();
     private Label detail = new Label("添加内容");
+    private CountDown countDown = null;
     private Item item = new Item();
+    private int id=-1;
     public TodoDetail(){
 
         //基础设置
@@ -85,7 +87,7 @@ public class TodoDetail extends AnchorPane {
                 "-fx-font-size: 10;"+
                 "-fx-font-weight: bolder");
 
-        CountDown countDown = new CountDown(ddl);
+        countDown = new CountDown(ddl);
         countDown.setPrefWidth(110);
         countDown.setPrefHeight(40);
         countDown.setLayoutX(20);
@@ -123,7 +125,17 @@ public class TodoDetail extends AnchorPane {
     }
 
     public void setItem(Item item) {
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         this.item = item;
+        this.title.setText(this.item.getTitle());
+        this.detail.setText(this.item.getContent());
+        this.ddl.setText(df.format(this.item.getDate()));
+        this.countDown = new CountDown(this.ddl);
+        this.id = this.item.getId();
+    }
+
+    public int getItemId(){
+        return this.id;
     }
 
     public String getTitle() {
