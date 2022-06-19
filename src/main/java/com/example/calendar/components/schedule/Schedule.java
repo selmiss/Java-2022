@@ -107,7 +107,7 @@ public class Schedule extends AnchorPane {
         scrollPane.setPrefWidth(280);
         scrollPane.setEffect(new InnerShadow(1,Color.rgb(0,0,0,0.3)));
         scrollPane.getStylesheets().add("file:src/main/resources/com/example/calendar/css/scroll.css");
-        scrollPane.setBackground(new Background(new BackgroundFill(Color.web("#FBFFFF"), CornerRadii.EMPTY, Insets.EMPTY)));
+        scrollPane.setBackground(new Background(new BackgroundFill(Color.web("#eeeeee"), CornerRadii.EMPTY, Insets.EMPTY)));
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
