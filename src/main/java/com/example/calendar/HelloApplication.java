@@ -43,6 +43,7 @@ public class HelloApplication extends Application {
     // 全局变量添加
     List<Item> AllItem = new ArrayList<>();
     List<Idea> AllIdea = new ArrayList<>();
+    List<List<List<String>>> AllCourse = new ArrayList<>();
     // 控制类添加
     TodoItemController todoItemController = new TodoItemController();
 
@@ -55,7 +56,7 @@ public class HelloApplication extends Application {
     Header header4 = new Header("you can take notes here","来记录此刻的灵感吧");//笔记详细页面顶部标题栏
     TodoDetail todoDetail = new TodoDetail();//待办事项详细
     TodoLists todoLists = new TodoLists(AllItem);//待办事项列表
-    Schedule schedule = new Schedule();//课程表
+    //Schedule schedule = new Schedule(AllCourse);//课程表
     NoteList noteList = new NoteList(AllIdea);//笔记列表
     NoteDetail noteDetail = new NoteDetail();//笔记详细
 
@@ -99,8 +100,7 @@ public class HelloApplication extends Application {
         AllIdea = ideaController.ReadIdeaList();//初始化idea list
         noteList = new NoteList(AllIdea);
         /** test0 **/
-        String source_0="数学建模 ◇李卫国[1-16周]◇(三)204第1，2节";
-        System.out.println(wordAnalisys.Analysis(source_0).toString());
+
 
 
         /** 测试1 **/
@@ -122,10 +122,13 @@ public class HelloApplication extends Application {
         try{
 //            List<List<String>> testlist = courseController.getCourseList();
 //            courseController.courseRead(testlist);
-            List<List<List<String>>> testlist = courseController.getAllCourseList();
-//            courseController.courseAllRead(testlist);
-            courseController.courseAllWrite(testlist);
-        }catch (Exception e){System.out.println("CourseControllerError");}
+
+             AllCourse = courseController.getAllCourseList();
+            courseController.courseAllRead(AllCourse);
+        }catch (Exception e){System.out.println("CouseControllerError");}
+
+        Schedule schedule = new Schedule(AllCourse);//课程表
+
         //当点击文本框以外的地方时转移焦点，从而使得文本框可以通过判断焦点失去事件而移除
         borderPane.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override

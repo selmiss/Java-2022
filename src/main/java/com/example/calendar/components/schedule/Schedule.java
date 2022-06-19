@@ -24,7 +24,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import java.util.List;
 import java.util.Stack;
+
 
 /**
  * 课程表类.
@@ -47,7 +50,9 @@ public class Schedule extends AnchorPane {
     HBox hBox = new HBox();//水平盒容器
     Label weekIndexLabel = new Label();//显示周数的标签
     int index=-1;//当前周数
-    public Schedule(){
+    List<List<List<String>>> allList;//全部课程
+    public Schedule(List<List<List<String>>> Alllist) {
+        this.allList = Alllist;
         //设置学期起始日期
         try {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -122,11 +127,19 @@ public class Schedule extends AnchorPane {
             //dateLabel.setEffect(new InnerShadow(5,0,-1,Color.rgb(0,0,0,0.3)));
             gridPane.add(dateLabel,0,i,1,1);
         }
-        ScheduleItem Sitem = new ScheduleItem(0,0,2);
-        ScheduleItem Sitem2 = new ScheduleItem(0,1,2);
-        gridPane.add(Sitem,Sitem.x+1,Sitem.y,1,Sitem.h);
-        gridPane.add(Sitem2 , Sitem2.x+1,Sitem2.y,1,Sitem2.h);
-
+        int[] numarr={0,2,5,7,10,12};
+        for(int i=0;i<6;i++)
+        {
+            for(int j=0;j<7;j++)
+            {
+                String content= Alllist.get(index).get(i).get(j);
+                if(content=="")
+                    continue;
+                ScheduleItem Sitem = new ScheduleItem(j,numarr[i],2,content);
+                System.out.println(numarr[i]);
+                gridPane.add(Sitem,Sitem.x+1,Sitem.y,1,Sitem.h);
+            }
+        }
         getChildren().addAll(weekIndexLabel,hBox,scrollPane,importButton);
     }
 
@@ -142,7 +155,7 @@ public class Schedule extends AnchorPane {
         public void handle(Event event) {
             Label src = (Label)event.getSource();
 
-            WeekPicker weekPicker = new WeekPicker(src,hBox,index);
+            WeekPicker weekPicker = new WeekPicker(src,hBox,index,gridPane,allList);
             Stage stage = new Stage();
             stage.setX(1110);
             stage.setY(420);
@@ -168,67 +181,6 @@ public class Schedule extends AnchorPane {
 
 }
 
-/**
- * 时间标签类.
- * <p>用来显示课表表头，包括日期、节数.</p>
- * @author 郭一帆
- * @version 1.0
- * @since 2022-6-14
- */
-class DateLabel extends Label{
-    public DateLabel(String var1){
-        super(var1);
-        setPrefWidth(36);
-        setPrefHeight(60);
-        setStyle("-fx-font-size: 12;" +
-                "font-width: normal;" +
-                "-fx-background-color: #ffffff;" +
-                "-fx-border-color: #D8D8D8;" +
-                "-fx-border-width: 0.5");
-        setAlignment(Pos.CENTER);
-        setWrapText(true);
-    }
-}
 
-/**
- * 课程类.
- * <p>显示课程名、上课地点.</p>
- * @author 郭一帆
- * @version 1.0
- * @since 2022-6-14
- */
-class ScheduleItem extends AnchorPane{
-    public int x,y,h;
-    Label title = new Label();
-    Label location = new Label();
-    public ScheduleItem(int x,int y,int h){
-        this.x = x;
-        this.y = y;
-        this.h = h;
-        setBackground(new Background(new BackgroundFill(Color.valueOf("#FF9F9F"),new CornerRadii(8),new Insets(0,0,0,0))));
-        setPrefWidth(36);
-        setPrefHeight(60*h);
 
-        //课程名设置
-        title.setStyle("-fx-font-size: 12;" +
-                "font-width: normal;");
-        title.setTextFill(Color.WHITE);
-        title.setText("操作系统");
-        title.setPrefWidth(36);
-        title.setWrapText(true);
-        title.setLayoutY(10*h);
-        title.setMaxHeight(40);
 
-        //上课地点设置
-        location.setStyle("-fx-font-size: 12;" +
-                "font-width: normal;");
-        location.setTextFill(Color.WHITE);
-        location.setText("@(一)101");
-        location.setPrefWidth(36);
-        location.setWrapText(true);
-        location.setLayoutY(30*h);
-        location.setMaxHeight(40);
-
-        getChildren().addAll(title,location);
-    }
-}

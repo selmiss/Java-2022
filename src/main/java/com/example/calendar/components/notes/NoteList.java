@@ -138,6 +138,7 @@ class Note extends AnchorPane{
         Label title = new Label(idea.getTitle());
         title.setLayoutY(10);
         title.setLayoutX(60);
+        title.setMaxWidth(100);
         title.setAlignment(Pos.CENTER);
         title.setStyle(
                 "-fx-font-size: 14;" +

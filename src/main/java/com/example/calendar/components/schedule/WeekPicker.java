@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * 周数选择器.
@@ -28,10 +29,14 @@ public class WeekPicker extends ScrollPane {
     Label src;
     HBox hBox;
     int index;
-    public WeekPicker(Label src,HBox hBox,int index){
+    GridPane gridPane;
+    List<List<List<String>>> allList;
+    public WeekPicker(Label src, HBox hBox, int index, GridPane gridPane, List<List<List<String>>> allList){
         this.src = src;
         this.hBox = hBox;
         this.index = index;
+        this.gridPane = gridPane;
+        this.allList = allList;
 
         setHbarPolicy(ScrollBarPolicy.NEVER);
         setVbarPolicy(ScrollBarPolicy.NEVER);
@@ -106,6 +111,31 @@ public class WeekPicker extends ScrollPane {
                 DateLabel dateLabel = new DateLabel(dayOfWeek.get(Calendar.MONTH)+1+"."+dayOfWeek.get(Calendar.DAY_OF_MONTH));
                 dayOfWeek.add(Calendar.DAY_OF_YEAR,1);
                 hBox.getChildren().add(dateLabel);
+            }
+
+            gridPane.getChildren().clear();
+
+            //网格面板样式
+            for(int i=0;i<14;i++)
+            {
+                DateLabel dateLabel = new DateLabel(String.valueOf(i+1));
+                dateLabel.setPrefWidth(29);
+                //dateLabel.setEffect(new InnerShadow(5,0,-1,Color.rgb(0,0,0,0.3)));
+                gridPane.add(dateLabel,0,i,1,1);
+            }
+
+            int[] numarr={0,2,5,7,10,12};
+            for(int i=0;i<6;i++)
+            {
+                for(int j=0;j<7;j++)
+                {
+                    String content= allList.get(index).get(i).get(j);
+                    if(content=="")
+                        continue;
+                    ScheduleItem Sitem = new ScheduleItem(j,numarr[i],2,content);
+                    System.out.println(numarr[i]);
+                    gridPane.add(Sitem,Sitem.x+2,Sitem.y,1,Sitem.h);
+                }
             }
 
             Stage stage = (Stage)getScene().getWindow();
