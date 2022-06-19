@@ -1,7 +1,11 @@
 package com.example.calendar.components.notes;
 
+import com.example.calendar.Entity.Idea;
 import com.example.calendar.components.CircleButton;
+import com.example.calendar.controller.UserOpController;
 import com.example.calendar.utils.MyShadow;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -13,6 +17,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 笔记列表类.
@@ -25,7 +30,8 @@ public class NoteList extends AnchorPane
     HBox notesNavigate = new HBox();//选择显示笔记的创建时间
     ScrollPane scrollPane = new ScrollPane();
     VBox notesBox = new VBox();
-    public NoteList(){
+    UserOpController userOpController= new UserOpController();
+    public NoteList(List<Idea> idea_list){
         //基础设置
         setMaxHeight(340);
         //滚动面板
@@ -39,14 +45,26 @@ public class NoteList extends AnchorPane
         notesBox.setPadding(new Insets(10,5,20,5));
         notesBox.setSpacing(10);
         notesBox.setBackground(new Background(new BackgroundFill(Color.web("#F1F9EE"), CornerRadii.EMPTY, Insets.EMPTY)));
-        notesBox.getChildren().add(new Note());
-        notesBox.getChildren().add(new Note());
-        notesBox.getChildren().add(new Note());
-        notesBox.getChildren().add(new Note());
-        notesBox.getChildren().add(new Note());
-        notesBox.getChildren().add(new Note());
-        notesBox.getChildren().add(new Note());
-        notesBox.getChildren().add(new Note());
+        for(Idea i:idea_list)
+        {
+            Note idea1 = new Note(i);
+            idea1.deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    userOpController.deleteIdea(i,idea_list);
+                    notesBox.getChildren().remove(idea1);
+                }
+            });
+            idea1.noteButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    userOpController.deleteIdea(i,idea_list);
+                    notesBox.getChildren().remove(idea1);
+                }
+            });
+            notesBox.getChildren().add(idea1);
+        }
+
 
         scrollPane.setContent(notesBox);
 
@@ -61,7 +79,9 @@ public class NoteList extends AnchorPane
  * @since 2022-6-13
  */
 class Note extends AnchorPane{
-    public Note(){
+    CircleButton noteButton;
+    CircleButton deleteButton;
+    public Note(Idea idea){
         //基础设置
         setPrefWidth(100);
         setPrefHeight(50);
@@ -74,13 +94,13 @@ class Note extends AnchorPane{
         setEffect(new MyShadow());
 
         //已完成按钮
-        CircleButton noteButton;
+
         noteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/confirm/green.png");
         noteButton.setLayoutX(20);
         noteButton.setLayoutY(10);
 
         //笔记标题
-        Label title = new Label("操作系统理论作业");
+        Label title = new Label(idea.getTitle());
         title.setLayoutY(10);
         title.setLayoutX(60);
         title.setAlignment(Pos.CENTER);
@@ -102,7 +122,7 @@ class Note extends AnchorPane{
 
 
         //删除按钮
-        CircleButton deleteButton;
+
             deleteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/delete/green.png");
         deleteButton.setLayoutX(240);
         deleteButton.setLayoutY(10);

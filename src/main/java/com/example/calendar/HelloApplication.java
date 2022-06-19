@@ -59,7 +59,7 @@ public class HelloApplication extends Application {
     TodoDetail todoDetail = new TodoDetail();//待办事项详细
     TodoLists todoLists = new TodoLists(AllItem);//待办事项列表
     Schedule schedule = new Schedule();//课程表
-    NoteList noteList = new NoteList();//笔记列表
+    NoteList noteList = new NoteList(AllIdea);//笔记列表
     NoteDetail noteDetail = new NoteDetail();//笔记详细
 
     CircleButton addItemButton = new CircleButton("file:src/main/resources/com/example/calendar/images/addButton.png");
@@ -99,9 +99,7 @@ public class HelloApplication extends Application {
         todoLists = new TodoLists(AllItem);
 
         AllIdea = ideaController.ReadIdeaList();//初始化idea list
-
-
-//        todoItemController.ReadItemList();
+        noteList = new NoteList(AllIdea);
 
         /** 测试1 **/
         try{
@@ -189,6 +187,12 @@ public class HelloApplication extends Application {
         finishNoteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                System.out.println(noteDetail.getIdea().toString());
+                try {
+                    userOpController.addIdea(noteDetail.getIdea(), AllIdea);
+                }catch (Exception addError){System.out.println("添加事项外层异常");}
+                noteDetail = new NoteDetail();
+                noteList = new NoteList(AllIdea);
                 borderPane.setCenter(noteList);
                 borderPane.setTop(header3);
             }

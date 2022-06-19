@@ -60,14 +60,14 @@ public class UserOpController {
     /** 添加多个待办元素 **/
     public void addTodoItemList(List<Item> arr) throws Exception {
         arr = sortedItemList(arr);//排序
-        System.out.println("add arr TodoItemList begin");
+        //System.out.println("add arr TodoItemList begin");
         String root = System.getProperty("user.dir");
         String path = root + "/src/main/resources/data/itemData.xls";
         System.out.println("path" + path);
-        System.out.println("add list ok 1");
+        //System.out.println("add list ok 1");
         File file = new File(path);
         OutputStream outputStream = new FileOutputStream(file);
-        System.out.println("add list ok 2");
+        System.out.println("add list ok");
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("sheet1");
 
@@ -78,7 +78,7 @@ public class UserOpController {
         row.createCell(2).setCellValue("内容");
         row.createCell(3).setCellValue("类别");
         row.createCell(4).setCellValue("权重");
-        System.out.println("add list ok 3");
+        //System.out.println("add list ok 3");
         for(Item x : arr){
             HSSFRow temp_row = sheet.createRow(sheet.getLastRowNum()+1);
             temp_row.createCell(0).setCellValue(x.getTitle());
@@ -87,16 +87,16 @@ public class UserOpController {
             temp_row.createCell(3).setCellValue(x.getSubject());
             temp_row.createCell(4).setCellValue(x.getWeight());
         }
-        System.out.println("add list ok 4");
+        //System.out.println("add list ok 4");
         workbook.setActiveSheet(0);
         workbook.write(outputStream);
         outputStream.close();
-        System.out.println("add list ok 5");
+        //System.out.println("add list ok 5");
     }
     /** 删除单个待办元素 **/
     public void deleteTodoItem(Item item, List<Item> list){
         int id = item.getId(), flag = 0, i=0;
-        System.out.println("del ok 1");
+        //System.out.println("del ok 1");
         for(i=0;i<list.size();i++){
             if(flag == 1){
                 System.out.println("没问题0");
@@ -108,7 +108,7 @@ public class UserOpController {
                 System.out.println("没问题2");
                 flag = 1;
             }
-            System.out.println("del ok 2");
+            //System.out.println("del ok 2");
         }
         try{
             list = sortedItemList(list);
@@ -116,7 +116,7 @@ public class UserOpController {
         }catch (Exception e){
             System.out.println("这里是删除方法 add List 方法出了问题");
         }
-        System.out.println("del ok 3");
+        //System.out.println("del ok 3");
     }
     /** 将给予的list进行时间从近到远排序 **/
     public List<Item> sortedItemList(List<Item> list){

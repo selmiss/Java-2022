@@ -8,6 +8,11 @@ public class Idea implements Comparable<Idea>{
     private String content;
     private Date date;
 
+    public Idea() {
+        this.date= new Date();
+        this.id=0;
+    }
+
     @Override
     public String toString() {
         return "Idea{" +
