@@ -135,8 +135,9 @@ public class Schedule extends AnchorPane {
                 String content= Alllist.get(index).get(i).get(j);
                 if(content=="")
                     continue;
-                ScheduleItem Sitem = new ScheduleItem(j,numarr[i],2,content);
-                System.out.println(numarr[i]);
+                int len =content.charAt(content.length()-1)-'0';
+                content=content.substring(0,content.length()-1);
+                ScheduleItem Sitem = new ScheduleItem(j,numarr[i],len,content);
                 gridPane.add(Sitem,Sitem.x+1,Sitem.y,1,Sitem.h);
             }
         }

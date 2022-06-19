@@ -14,7 +14,7 @@ public class WordAnalisys {
             String position = arr[2];
             for(int i=0;i<position.length();i++)
             {
-                if(position.charAt(i)==',')
+                if(position.charAt(i)==','||position.charAt(i)=='，')
                     len++;
             }
             position = position.split("第")[0];
