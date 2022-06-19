@@ -72,10 +72,10 @@ public class CourseController {
 
                 for(String str : temp){
 //                    System.out.println("这是temp:"+str);
-                    if(str.equals("")){
+                    /*if(str.equals("")){
                         arr.add("");
                         continue;
-                    }
+                    }*/
                     int start = wordAnalisys.Analysis(str).getStart(), end= wordAnalisys.Analysis(str).getEnd();
 //                    System.out.println("该元素的start:" + start + " 该元素的end:" + end);
                     String name = wordAnalisys.Analysis(str).getContent();
@@ -86,9 +86,9 @@ public class CourseController {
                         arr.add("");
                     }
                 }
-                for(String str : arr){
-//                    System.out.println("这是arr:" + str);
-                }
+                /*for(String str : arr){
+                    System.out.println("这是arr:" + str);
+                }*/
                 list.add(arr);
             }
         }catch (Exception e){
@@ -98,8 +98,9 @@ public class CourseController {
         return list;
     }
     public void courseRead(List<List<String>> course){
+        System.out.println(course.size());
         for(int i=0;i<course.size();i++){
-//            System.out.println("时间段" + (i+1));
+            System.out.println("时间段" + (i+1));
             List<String> temp = course.get(i);
             for(int j=0;j<temp.size();j++){
                 String str = temp.get(j);
@@ -121,7 +122,7 @@ public class CourseController {
     public List<List<List<String>>> getAllCourseList(){
         List<List<List<String>>> ans = new ArrayList<>();
         for(int i=1;i<=20;i++){
-            List<List<String>> temp = getCourseList(i);
+            List<List<String>> temp = getCourseList();
             ans.add(temp);
         }
         return ans;
@@ -137,36 +138,37 @@ public class CourseController {
             System.out.println("ok1");
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.createSheet("sheet" + (week+1));
-            {HSSFRow row0 = sheet.createRow(0);
+            HSSFRow row0 = sheet.createRow(0);
                 row0.createCell(0).setCellValue("");
                 row0.createCell(1).setCellValue("");
                 row0.createCell(2).setCellValue("星期一");
                 row0.createCell(3).setCellValue("星期二");
                 row0.createCell(4).setCellValue("星期三");
                 row0.createCell(5).setCellValue("星期四");
-                row0.createCell(5).setCellValue("星期五");
-                row0.createCell(5).setCellValue("星期六");
-                row0.createCell(5).setCellValue("星期日");}
+                row0.createCell(6).setCellValue("星期五");
+                row0.createCell(7).setCellValue("星期六");
+                row0.createCell(8).setCellValue("星期日");
             System.out.println("ok2");
-            {HSSFRow row1= sheet.createRow(1);
+            HSSFRow row1= sheet.createRow(1);
                 row1.createCell(0).setCellValue("上午");
-                row1.createCell(1).setCellValue("第1,2节");}
-            {HSSFRow row2= sheet.createRow(2);
+                row1.createCell(1).setCellValue("第1,2节");
+            HSSFRow row2= sheet.createRow(2);
                 row2.createCell(0).setCellValue("上午");
-                row2.createCell(1).setCellValue("第3,4,5节");}
-            {HSSFRow row3= sheet.createRow(3);
+                row2.createCell(1).setCellValue("第3,4,5节");
+            HSSFRow row3= sheet.createRow(3);
                 row3.createCell(0).setCellValue("下午");
-                row3.createCell(1).setCellValue("第6,7节");}
-            {HSSFRow row4= sheet.createRow(4);
+                row3.createCell(1).setCellValue("第6,7节");
+            HSSFRow row4= sheet.createRow(4);
                 row4.createCell(0).setCellValue("下午");
-                row4.createCell(1).setCellValue("第8,9,10节");}
-            {HSSFRow row5= sheet.createRow(5);
+                row4.createCell(1).setCellValue("第8,9,10节");
+            HSSFRow row5= sheet.createRow(5);
                 row5.createCell(0).setCellValue("晚上");
-                row5.createCell(1).setCellValue("第11,12节");}
-            {HSSFRow row1= sheet.createRow(6);
-                row1.createCell(0).setCellValue("晚上");
-                row1.createCell(1).setCellValue("第13,14节");}
+                row5.createCell(1).setCellValue("第11,12节");
+            HSSFRow row6= sheet.createRow(6);
+                row6.createCell(0).setCellValue("晚上");
+                row6.createCell(1).setCellValue("第13,14节");
             System.out.println("ok3");
+            System.out.println(course.size());
             for(int i=0;i<course.size();i++){
                 List<String> arr = course.get(i);
                 System.out.println("这是第个" + i);
@@ -189,7 +191,7 @@ public class CourseController {
     public void courseAllWrite(List<List<List<String>>> course){
         for(int i=0;i<course.size();i++){
             System.out.println("这是第" + (i+1) + "周的课表");
-            courseWrite(course.get(i), i+1);
+            courseWrite(course.get(i), i);
         }
     }
 }
