@@ -123,14 +123,14 @@ public class UserOpController {
         list.sort(Item::compareTo);
         return list;
     }
-    /** **/
+    /** 添加单个灵感 **/
     public void addIdea(Idea idea, List<Idea> list) throws Exception{
         list.add(idea);
         idea.setId(list.size()+1);
         list = sortedIdeaList(list);//排序
         addIdeaList(list);
     }
-    /** **/
+    /** 添加灵感列表 **/
     public void addIdeaList(List<Idea> arr) throws Exception{
         arr = sortedIdeaList(arr);//排序
         System.out.println("add arr ideaList begin");
@@ -164,7 +164,7 @@ public class UserOpController {
         outputStream.close();
         System.out.println("add list ok 5");
     }
-    /** **/
+    /** 删除灵感 **/
     public void deleteIdea(Idea idea, List<Idea> list){
         int id = idea.getId(), flag = 0, i=0;
         System.out.println("del idea ok 1");
@@ -189,7 +189,7 @@ public class UserOpController {
         }
         System.out.println("del idea ok 3");
     }
-    /** **/
+    /** 灵感排序 **/
     public List<Idea> sortedIdeaList(List<Idea> list){
         list.sort(Idea::compareTo);
         return list;
