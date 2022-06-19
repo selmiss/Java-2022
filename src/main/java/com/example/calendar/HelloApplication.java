@@ -8,6 +8,7 @@ import com.example.calendar.components.notes.NoteList;
 import com.example.calendar.components.schedule.Schedule;
 import com.example.calendar.components.todo.TodoDetail;
 import com.example.calendar.components.todo.TodoLists;
+import com.example.calendar.controller.CourseController;
 import com.example.calendar.controller.IdeaController;
 import com.example.calendar.controller.TodoItemController;
 import com.example.calendar.controller.UserOpController;
@@ -71,6 +72,7 @@ public class HelloApplication extends Application {
     // 控制类添加
     UserOpController userOpController = new UserOpController();
     IdeaController ideaController = new IdeaController();
+    CourseController courseController = new CourseController();
 
 
     /**
@@ -100,6 +102,7 @@ public class HelloApplication extends Application {
 
 //        todoItemController.ReadItemList();
 
+        /** 测试1 **/
         try{
 //            Item item = new Item(10, "数据库考试", "my content", new Date(2022, 06, 01), 0, 17);
 //            userOpController.addTodoItem(item, AllItem);
@@ -110,11 +113,15 @@ public class HelloApplication extends Application {
 //                System.out.println("ID:" + testlist.get(i).getId() + "标题:" + testlist.get(i).getTitle() + "时间:" + testlist.get(i).getDate().toString());
 //            }
 //            ideaController.ReadIdeaList();
-            Idea idea = new Idea(5, "标题5", "内容5", new Date(2022, 06, 01));
-            userOpController.addIdea(idea, AllIdea);
-            ideaController.ReadIdeaList();
+//            Idea idea = new Idea(5, "标题5", "内容5", new Date(2022, 06, 01));
+//            userOpController.addIdea(idea, AllIdea);
+//            ideaController.ReadIdeaList();
         }catch (Exception e){System.out.println("userControllerError!");}
-
+        /** 测试2 **/
+        try{
+            List<List<String>> testlist = courseController.getCourseList();
+            courseController.courseRead(testlist);
+        }catch (Exception e){System.out.println("CouseControllerError");}
         //当点击文本框以外的地方时转移焦点，从而使得文本框可以通过判断焦点失去事件而移除
         borderPane.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
