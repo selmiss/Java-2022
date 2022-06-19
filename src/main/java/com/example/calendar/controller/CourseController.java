@@ -57,6 +57,7 @@ public class CourseController {
             HSSFSheet sheet = workbook.getSheetAt(0);
             for(int i = 2; i<=7 ;i++){
                 HSSFRow row = sheet.getRow(i);
+                System.out.println("这是第" + i+ "行");
                 List<String> arr = new ArrayList<>();
                 List<String> temp = new ArrayList<>();
 
@@ -71,6 +72,7 @@ public class CourseController {
 
                 for(String str : temp){
                     System.out.println("这是temp:"+str);
+                    if(str.equals("")) continue;
                     int start = wordAnalisys.Analysis(str).getStart(), end= wordAnalisys.Analysis(str).getEnd();
                     System.out.println("该元素的start:" + start + " 该元素的end:" + end);
                     String name = wordAnalisys.Analysis(str).getContent();
