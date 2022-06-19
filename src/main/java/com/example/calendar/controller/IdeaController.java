@@ -38,7 +38,6 @@ public class IdeaController {
                     date = cell.getDateCellValue();
                 }catch (Exception dateWrong){System.out.println("日期转换错误");}
                 Idea idea = new Idea(i,title,content,date);
-                System.out.println(idea.toString());
                 todolist.add(idea);
             }
         }catch (Exception e) {
