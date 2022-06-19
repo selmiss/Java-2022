@@ -94,8 +94,8 @@ public class HelloApplication extends Application {
 
         // 控制类测试
         System.out.println("Start our program!");
-//        AllItem = todoItemController.ReadItemList(); //初始化list
-//        todoLists = new TodoLists(AllItem);
+        AllItem = todoItemController.ReadItemList(); //初始化list
+        todoLists = new TodoLists(AllItem);
 
         AllIdea = ideaController.ReadIdeaList();//初始化idea list
         noteList = new NoteList(AllIdea);
