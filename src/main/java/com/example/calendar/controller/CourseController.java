@@ -82,6 +82,8 @@ public class CourseController {
 //                    System.out.println("该元素的name:" + name);
                     if(start<=week && end>=week){
                         arr.add(name);
+                    }else {
+                        arr.add("");
                     }
                 }
                 for(String str : arr){
