@@ -44,7 +44,6 @@ public class TodoItemController {
                         date = cell.getDateCellValue();
                 }catch (Exception dateWrong){System.out.println("日期转换错误");}
                 Item item = new Item(i,title,content,date,subject,weight);
-                System.out.println(item.toString());
                 todolist.add(item);
             }
         }catch (Exception e) {System.out.println("File open/read fail!");}
