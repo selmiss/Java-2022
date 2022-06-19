@@ -1,5 +1,7 @@
 package com.example.calendar.controller;
 
+import javafx.scene.control.Alert;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +40,10 @@ public class UpdateController {
             if (fis != null) fis.close();
             if (fos != null) fos.close();
         }
-        catch (Exception e) {System.out.println("传入文件失败");
+        catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("请上传从教务管理系统下载的班级推荐课表");
+            alert.showAndWait();
         }
         finally {
 

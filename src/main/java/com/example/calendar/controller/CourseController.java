@@ -1,14 +1,12 @@
 package com.example.calendar.controller;
 
 import com.example.calendar.Entity.Course;
+import javafx.scene.control.Alert;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +35,13 @@ public class CourseController {
                 list.add(arr);
             }
         }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("请上传从教务管理系统下载的班级推荐课表");
+            alert.showAndWait();
         }
         return list;
     }
-    public List<List<String>> getCourseList(int week){
+    public List<List<String>> getCourseList(int week) throws IOException {
         List< List<String> > list = new ArrayList<>();
         WordAnalisys wordAnalisys = new WordAnalisys();
         String root = System.getProperty("user.dir");
@@ -84,6 +85,7 @@ public class CourseController {
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("异常地点为 get Course List (week版)");
+            throw new IOException();
         }
         return list;
     }
@@ -108,9 +110,15 @@ public class CourseController {
     }
     public List<List<List<String>>> getAllCourseList(){
         List<List<List<String>>> ans = new ArrayList<>();
+        try{
         for(int i=1;i<=20;i++){
             List<List<String>> temp = getCourseList(i);
             ans.add(temp);
+        }}
+        catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("请上传从教务管理系统下载的班级推荐课表");
+            alert.showAndWait();
         }
         return ans;
     }
