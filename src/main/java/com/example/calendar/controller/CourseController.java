@@ -45,7 +45,7 @@ public class CourseController {
         return list;
     }
     public List<List<String>> getCourseList(int week){
-        System.out.println("开始读取课表");
+        System.out.println("开始读取课表 week为" + week);
         List< List<String> > list = new ArrayList<>();
         WordAnalisys wordAnalisys = new WordAnalisys();
         String root = System.getProperty("user.dir");
@@ -70,11 +70,17 @@ public class CourseController {
                 temp.add(monday);temp.add(tuesday); temp.add(wednesday); temp.add(thursday);temp.add(friday); temp.add(saturday); temp.add(sunday);
 
                 for(String str : temp){
+                    System.out.println("这是temp:"+str);
                     int start = wordAnalisys.Analysis(str).getStart(), end= wordAnalisys.Analysis(str).getEnd();
+                    System.out.println("该元素的start:" + start + " 该元素的end:" + end);
                     String name = wordAnalisys.Analysis(str).getContent();
+                    System.out.println("该元素的name:" + name);
                     if(start<=week && end>=week){
                         arr.add(name);
                     }
+                }
+                for(String str : arr){
+                    System.out.println("这是arr:" + str);
                 }
                 list.add(arr);
             }
