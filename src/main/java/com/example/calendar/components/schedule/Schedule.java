@@ -21,6 +21,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * 课程表类.
@@ -43,7 +44,7 @@ public class Schedule extends AnchorPane {
     HBox hBox = new HBox();//水平盒容器
     Label weekIndexLabel = new Label();//显示周数的标签
     int index=-1;//当前周数
-    public Schedule(){
+    public Schedule(List<List<List<String>>> Alllist) {
         //设置学期起始日期
         try {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -111,12 +112,15 @@ public class Schedule extends AnchorPane {
             //dateLabel.setEffect(new InnerShadow(5,0,-1,Color.rgb(0,0,0,0.3)));
             gridPane.add(dateLabel,0,i,1,1);
         }
-        ScheduleItem Sitem = new ScheduleItem(0,0,2);
-        ScheduleItem Sitem2 = new ScheduleItem(0,1,2);
-        gridPane.add(Sitem,Sitem.x+1,Sitem.y,1,Sitem.h);
-        gridPane.add(Sitem2 , Sitem2.x+1,Sitem2.y,1,Sitem2.h);
-
-        getChildren().addAll(weekIndexLabel,hBox,scrollPane);
+        for(int i=0;i<6;i++)
+        {
+            for(int j=0;j<7;j++)
+            {
+                String content= Alllist.get(0).get(i).get(j);
+                ScheduleItem Sitem = new ScheduleItem(i,j,2,content);
+                gridPane.add(Sitem,Sitem.x+1,Sitem.y,1,Sitem.h);
+            }
+        }
     }
 
     /**
@@ -179,19 +183,25 @@ class ScheduleItem extends AnchorPane{
     public int x,y,h;
     Label title = new Label();
     Label location = new Label();
-    public ScheduleItem(int x,int y,int h){
+    public ScheduleItem(int x,int y,int h,String content){
         this.x = x;
         this.y = y;
         this.h = h;
         setBackground(new Background(new BackgroundFill(Color.valueOf("#FF9F9F"),new CornerRadii(8),new Insets(0,0,0,0))));
         setPrefWidth(36);
         setPrefHeight(60*h);
+        String Title = "";
+        String Text = "";
+        Title = content.split("\n")[0];
+        try {
 
+            Text = content.split("\n")[1];
+        }catch (Exception fe){System.out.println("课程名字转换不完全");}
         //课程名设置
         title.setStyle("-fx-font-size: 12;" +
                 "font-width: normal;");
         title.setTextFill(Color.WHITE);
-        title.setText("操作系统");
+        title.setText(Title);
         title.setPrefWidth(36);
         title.setWrapText(true);
         title.setLayoutY(10*h);
@@ -201,7 +211,7 @@ class ScheduleItem extends AnchorPane{
         location.setStyle("-fx-font-size: 12;" +
                 "font-width: normal;");
         location.setTextFill(Color.WHITE);
-        location.setText("@(一)101");
+        location.setText(Text);
         location.setPrefWidth(36);
         location.setWrapText(true);
         location.setLayoutY(30*h);
