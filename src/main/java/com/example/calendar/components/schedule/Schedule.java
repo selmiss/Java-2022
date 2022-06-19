@@ -1,6 +1,7 @@
 package com.example.calendar.components.schedule;
 
 import com.example.calendar.components.CircleButton;
+import com.example.calendar.controller.UpdateController;
 import com.example.calendar.utils.TimePicker;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -41,6 +42,7 @@ public class Schedule extends AnchorPane {
             "第五周","第六周","第七周","第八周","第九周","第十周","第十一周",
     "第十二周","第十三周","第十四周","第十五周","第十六周","第十七周",
             "第十八周","第十九周","第二十周"};
+    UpdateController updateController = new UpdateController();
 
     Calendar nowCalendar = Calendar.getInstance();//当前时间
     Calendar startCalendar = Calendar.getInstance();//学期开始时间
@@ -88,7 +90,7 @@ public class Schedule extends AnchorPane {
         hBox.setEffect(new InnerShadow(2,0,1,Color.rgb(0,0,0,0.3)));
         Calendar dayOfWeek = Calendar.getInstance();
         dayOfWeek.add(Calendar.DAY_OF_YEAR,-(nowCalendar.get(Calendar.DAY_OF_WEEK)+6)%8+1);
-        System.out.println("今天是"+nowCalendar.get(Calendar.DAY_OF_WEEK));
+        //System.out.println("今天是"+nowCalendar.get(Calendar.DAY_OF_WEEK));
         DateLabel empty = new DateLabel("",-1);
         empty.setPrefWidth(30);
         hBox.getChildren().add(empty);
@@ -177,6 +179,7 @@ public class Schedule extends AnchorPane {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files","*.xls","*.xlsx"));
             File excelFile = fileChooser.showOpenDialog(stage);
+            //updateController.updateCourse(excelFile);
         }
     }
 

@@ -36,7 +36,8 @@ public class ScheduleItem extends AnchorPane {
         try {
 
             Text = content.split("\n")[1];
-        }catch (Exception fe){System.out.println("课程名字转换不完全");}
+        }catch (Exception fe){//System.out.println("课程名字转换不完全");
+        }
         //课程名设置
         title.setStyle("-fx-font-size: 12;" +
                 "font-width: normal;");

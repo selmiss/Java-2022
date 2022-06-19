@@ -92,7 +92,7 @@ public class HelloApplication extends Application {
         stage.setX(1100);
         stage.setY(80);
 
-        // 控制类测试
+        // 控制类
         System.out.println("Start our program!");
         AllItem = todoItemController.ReadItemList(); //初始化list
         todoLists = new TodoLists(AllItem);
@@ -153,7 +153,7 @@ public class HelloApplication extends Application {
         confirmButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println(todoDetail.getItem());
+                //System.out.println(todoDetail.getItem());
                 try {
                     if(todoDetail.getItemId()==-1)
                     userOpController.addTodoItem(todoDetail.getItem(), AllItem);
@@ -181,7 +181,7 @@ public class HelloApplication extends Application {
         finishNoteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println(noteDetail.getIdea().toString());
+//                System.out.println(noteDetail.getIdea().toString());
                 try {
                     if(noteDetail.getItemId()==-1)
                         userOpController.addIdea(noteDetail.getIdea(), AllIdea);

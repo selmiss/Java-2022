@@ -8,9 +8,10 @@ import java.util.Map;
 
 public class UpdateController {
     public void updateCourse(File f1){
+        String root = System.getProperty("user.dir");
         try {
             FileReader fr = new FileReader(f1);
-            File f2 = new File("/src/main/resources/data/courseData.xls");
+            File f2 = new File(root+"/src/main/resources/data/courseData.xls");
             FileWriter fw = new FileWriter(f2);
             char c[] = new char[(int) f1.length()];
             int temp = 0;
