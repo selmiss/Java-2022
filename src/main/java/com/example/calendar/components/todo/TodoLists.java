@@ -303,7 +303,7 @@ class TodoItem extends AnchorPane{
         countDown.setMaxWidth(70);
         countDown.setAlignment(Pos.CENTER);
         countDown.setStyle(
-                "-fx-font-size: 25;" +
+                "-fx-font-size: 19;" +
                         "-fx-font-weight: normal");
         switch (state){
             case 0:

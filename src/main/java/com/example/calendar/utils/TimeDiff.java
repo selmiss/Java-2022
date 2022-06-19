@@ -28,7 +28,7 @@ public class TimeDiff {
     @Override
     public String toString() {
         if(diffSeconds<0||diffMinutes<0||diffHours<0||diffDays<0)
-            return 0+"s";
+            return "已过期";
         else if(diffDays>=10)
             return diffDays+"d";
         else if(diffDays==0)
