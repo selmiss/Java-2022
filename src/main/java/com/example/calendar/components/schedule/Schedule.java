@@ -104,7 +104,9 @@ public class Schedule extends AnchorPane {
             gridPane.add(dateLabel,0,i,1,1);
         }
         ScheduleItem Sitem = new ScheduleItem(0,0,2);
+        ScheduleItem Sitem2 = new ScheduleItem(0,1,2);
         gridPane.add(Sitem,Sitem.x+1,Sitem.y,1,Sitem.h);
+        gridPane.add(Sitem2 , Sitem2.x+1,Sitem2.y,1,Sitem2.h);
 
         getChildren().addAll(weekIndexLabel,hBox,scrollPane);
     }

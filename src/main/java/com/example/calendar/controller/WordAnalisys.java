@@ -13,7 +13,7 @@ public class WordAnalisys {
             String position = arr[2];
             position = position.split("第")[0];
             content = arr[0]+'\n'+position;
-            String[] time=arr[1].split("\\[|周|-");
+            String[] time=arr[1].split("\\[|周|-|,|\\]");
             try{
                 start=Integer.parseInt(time[1]);
                 end=Integer.parseInt(time[2]);
@@ -21,7 +21,7 @@ public class WordAnalisys {
         }
         else {
             content = arr[0];
-            String[] time=arr[1].split("\\[|周|-");
+            String[] time=arr[1].split("\\[|周|-|,|\\]");
             try{
                 start=Integer.parseInt(time[1]);
                 end=Integer.parseInt(time[2]);
