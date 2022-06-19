@@ -161,7 +161,7 @@ public class Schedule extends AnchorPane {
 
             WeekPicker weekPicker = new WeekPicker(src,hBox,index,gridPane,allList);
             Stage stage = new Stage();
-            stage.setX(1110);
+            stage.setX(910);
             stage.setY(420);
             stage.initStyle(StageStyle.TRANSPARENT);
             stage.initModality(Modality.APPLICATION_MODAL);
