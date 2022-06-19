@@ -120,8 +120,10 @@ public class HelloApplication extends Application {
         }catch (Exception e){System.out.println("userControllerError!");}
         /** 测试2 **/
         try{
-            List<List<String>> testlist = courseController.getCourseList();
-            courseController.courseRead(testlist);
+//            List<List<String>> testlist = courseController.getCourseList();
+//            courseController.courseRead(testlist);
+            List<List<List<String>>> testlist = courseController.getAllCourseList();
+            courseController.courseAllRead(testlist);
         }catch (Exception e){System.out.println("CouseControllerError");}
         //当点击文本框以外的地方时转移焦点，从而使得文本框可以通过判断焦点失去事件而移除
         borderPane.addEventHandler(MouseDragEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {

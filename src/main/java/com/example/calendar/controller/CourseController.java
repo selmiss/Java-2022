@@ -46,8 +46,8 @@ public class CourseController {
     }
     public List<List<String>> getCourseList(int week){
         System.out.println("开始读取课表");
-        List<Course> course = new ArrayList<>();
         List< List<String> > list = new ArrayList<>();
+        WordAnalisys wordAnalisys = new WordAnalisys();
         String root = System.getProperty("user.dir");
         String path = root + "/src/main/resources/data/courseData.xls";
         System.out.println("路径" + path);
@@ -58,6 +58,7 @@ public class CourseController {
             for(int i = 2; i<=7 ;i++){
                 HSSFRow row = sheet.getRow(i);
                 List<String> arr = new ArrayList<>();
+                List<String> temp = new ArrayList<>();
 
                 String monday = row.getCell(2).getStringCellValue();
                 String tuesday = row.getCell(3).getStringCellValue();
@@ -66,7 +67,15 @@ public class CourseController {
                 String friday = row.getCell(6).getStringCellValue();
                 String saturday = row.getCell(7).getStringCellValue();
                 String sunday = row.getCell(8).getStringCellValue();
-                arr.add(monday);arr.add(tuesday); arr.add(wednesday); arr.add(thursday);arr.add(friday); arr.add(saturday); arr.add(sunday);
+                temp.add(monday);temp.add(tuesday); temp.add(wednesday); temp.add(thursday);temp.add(friday); temp.add(saturday); temp.add(sunday);
+
+                for(String str : temp){
+                    int start = wordAnalisys.Analysis(str).getStart(), end= wordAnalisys.Analysis(str).getEnd();
+                    String name = wordAnalisys.Analysis(str).getContent();
+                    if(start<=week && end>=week){
+                        arr.add(name);
+                    }
+                }
                 list.add(arr);
             }
         }catch (Exception e){
@@ -89,9 +98,16 @@ public class CourseController {
             }
         }
     }
+    public void courseAllRead(List<List<List<String>>> course){
+        for(int i=0;i<course.size();i++){
+            System.out.println("第" + (i+1) + "周!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            List<List<String>> course1 = course.get(i);
+            courseRead(course1);
+        }
+    }
     public List<List<List<String>>> getAllCourseList(){
         List<List<List<String>>> ans = new ArrayList<>();
-        for(int i=1;i<=16;i++){
+        for(int i=1;i<=20;i++){
             List<List<String>> temp = getCourseList(i);
             ans.add(temp);
         }
