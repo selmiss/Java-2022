@@ -1,27 +1,15 @@
 package com.example.calendar.Entity;
 
+import java.util.List;
+
 public class Course {
-    private int id;
-    private String courseInfo;
+    private List<List<String>> list;
 
-    public Course(String courseInfo) {
-        this.courseInfo = courseInfo;
-    }
-    public Course(int id, String courseInfo) {
-        this.id = id;
-        this.courseInfo = courseInfo;
+    public List<List<String>> getList() {
+        return list;
     }
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getCourseInfo() {
-        return courseInfo;
-    }
-    public void setCourseInfo(String courseInfo) {
-        this.courseInfo = courseInfo;
+    public void setList(List<List<String>> list) {
+        this.list = list;
     }
 }
