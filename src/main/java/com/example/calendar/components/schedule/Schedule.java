@@ -180,6 +180,21 @@ public class Schedule extends AnchorPane {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files","*.xls","*.xlsx"));
             File excelFile = fileChooser.showOpenDialog(stage);
             updateController.update(excelFile);
+
+            int[] numarr={0,2,5,7,10,12};
+            for(int i=0;i<6;i++)
+            {
+                for(int j=0;j<7;j++)
+                {
+                    String content= allList.get(index).get(i).get(j);
+                    if(content=="")
+                        continue;
+                    int len =content.charAt(content.length()-1)-'0';
+                    content=content.substring(0,content.length()-1);
+                    ScheduleItem Sitem = new ScheduleItem(j,numarr[i],len,content);
+                    gridPane.add(Sitem,Sitem.x+1,Sitem.y,1,Sitem.h);
+                }
+            }
         }
     }
 
