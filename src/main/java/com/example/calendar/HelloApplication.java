@@ -104,7 +104,7 @@ public class HelloApplication extends Application {
 
 
         /** 测试1 **/
-        try{
+//        try{
 //            Item item = new Item(10, "数据库考试", "my content", new Date(2022, 06, 01), 0, 17);
 //            userOpController.addTodoItem(item, AllItem);
 //            userOpController.deleteTodoItem(item, AllItem);
@@ -117,14 +117,14 @@ public class HelloApplication extends Application {
 //            Idea idea = new Idea(5, "标题5", "内容5", new Date(2022, 06, 01));
 //            userOpController.addIdea(idea, AllIdea);
 //            ideaController.ReadIdeaList();
-        }catch (Exception e){System.out.println("userControllerError!");}
+//        }catch (Exception e){System.out.println("userControllerError!");}
         /** 测试2 **/
         try{
 //            List<List<String>> testlist = courseController.getCourseList();
 //            courseController.courseRead(testlist);
 
-             AllCourse = courseController.getAllCourseList();
-            courseController.courseAllRead(AllCourse);
+            AllCourse = courseController.getAllCourseList();
+//            courseController.courseAllRead(AllCourse);
             courseController.courseAllWrite(AllCourse);
         }catch (Exception e){System.out.println("CouseControllerError");}
 

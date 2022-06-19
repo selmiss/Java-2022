@@ -122,7 +122,7 @@ public class CourseController {
     public List<List<List<String>>> getAllCourseList(){
         List<List<List<String>>> ans = new ArrayList<>();
         for(int i=1;i<=20;i++){
-            List<List<String>> temp = getCourseList(i);
+            List<List<String>> temp = getCourseList();
             ans.add(temp);
         }
         return ans;
