@@ -33,13 +33,28 @@ public class NoteDetail extends AnchorPane {
     private AnchorPane noteContent = new AnchorPane();
     private Label title = new Label();
     private Idea idea = new Idea();
+    private String content = "添加内容";
+    private WebView webView = new WebView();
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    private int itemId = -1;
 
     public Idea getIdea() {
         return idea;
     }
 
     public void setIdea(Idea idea) {
+        this.title.setText(idea.getTitle());
+        this.content = idea.getContent();
+        this.itemId = idea.getId();
         this.idea = idea;
+        Parser parser = Parser.builder().build();
+        Node document = parser.parse(this.content);
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        webView.getEngine().loadContent(renderer.render(document));
     }
 
     public NoteDetail(){
@@ -72,9 +87,8 @@ public class NoteDetail extends AnchorPane {
 
         //md编辑器
         Parser parser = Parser.builder().build();
-        Node document = parser.parse("添加内容");
+        Node document = parser.parse(this.content);
         HtmlRenderer renderer = HtmlRenderer.builder().build();
-        WebView webView = new WebView();
         webView.getEngine().loadContent(renderer.render(document));
         webView.setPrefWidth(240);
         webView.setPrefHeight(300);
@@ -100,6 +114,7 @@ public class NoteDetail extends AnchorPane {
             Object source = event.getSource();
             WebView src = (WebView)source;
             TextArea textArea = new TextArea();
+            textArea.setText(content);
             //基础设置
             textArea.setWrapText(true);
             //用输入框覆盖标签
