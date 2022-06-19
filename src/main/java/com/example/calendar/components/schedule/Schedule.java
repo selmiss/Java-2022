@@ -89,12 +89,12 @@ public class Schedule extends AnchorPane {
         Calendar dayOfWeek = Calendar.getInstance();
         dayOfWeek.add(Calendar.DAY_OF_YEAR,-(nowCalendar.get(Calendar.DAY_OF_WEEK)+6)%8+1);
         System.out.println("今天是"+nowCalendar.get(Calendar.DAY_OF_WEEK));
-        DateLabel empty = new DateLabel("");
+        DateLabel empty = new DateLabel("",-1);
         empty.setPrefWidth(30);
         hBox.getChildren().add(empty);
         for(int i=0;i<7;i++)
         {
-            DateLabel dateLabel = new DateLabel(dayOfWeek.get(Calendar.MONTH)+1+"."+dayOfWeek.get(Calendar.DAY_OF_MONTH));
+            DateLabel dateLabel = new DateLabel(dayOfWeek.get(Calendar.MONTH)+1+"."+dayOfWeek.get(Calendar.DAY_OF_MONTH),i);
             dayOfWeek.add(Calendar.DAY_OF_YEAR,1);
             hBox.getChildren().add(dateLabel);
         }
@@ -122,7 +122,7 @@ public class Schedule extends AnchorPane {
         //网格面板样式
         for(int i=0;i<14;i++)
         {
-            DateLabel dateLabel = new DateLabel(String.valueOf(i+1));
+            DateLabel dateLabel = new DateLabel(String.valueOf(i+1),-1);
             dateLabel.setPrefWidth(29);
             //dateLabel.setEffect(new InnerShadow(5,0,-1,Color.rgb(0,0,0,0.3)));
             gridPane.add(dateLabel,0,i,1,1);
