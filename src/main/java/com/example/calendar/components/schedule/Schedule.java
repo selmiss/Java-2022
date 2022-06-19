@@ -107,7 +107,7 @@ public class Schedule extends AnchorPane {
         scrollPane.setPrefWidth(280);
         scrollPane.setEffect(new InnerShadow(1,Color.rgb(0,0,0,0.3)));
         scrollPane.getStylesheets().add("file:src/main/resources/com/example/calendar/css/scroll.css");
-        scrollPane.setBackground(new Background(new BackgroundFill(Color.web("#FBFFFF"), CornerRadii.EMPTY, Insets.EMPTY)));
+        scrollPane.setBackground(new Background(new BackgroundFill(Color.web("#eeeeee"), CornerRadii.EMPTY, Insets.EMPTY)));
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
@@ -135,8 +135,9 @@ public class Schedule extends AnchorPane {
                 String content= Alllist.get(index).get(i).get(j);
                 if(content=="")
                     continue;
-                ScheduleItem Sitem = new ScheduleItem(j,numarr[i],2,content);
-                System.out.println(numarr[i]);
+                int len =content.charAt(content.length()-1)-'0';
+                content=content.substring(0,content.length()-1);
+                ScheduleItem Sitem = new ScheduleItem(j,numarr[i],len,content);
                 gridPane.add(Sitem,Sitem.x+1,Sitem.y,1,Sitem.h);
             }
         }
