@@ -89,7 +89,7 @@ public class HelloApplication extends Application {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setHeight(550);
         stage.setWidth(300);
-        stage.setX(1100);
+        stage.setX(900);
         stage.setY(80);
 
         // 控制类
@@ -109,7 +109,7 @@ public class HelloApplication extends Application {
         /** 测试2 **/
         try{
              AllCourse = courseController.getAllCourseList();
-            courseController.courseAllRead(AllCourse);
+             courseController.courseAllRead(AllCourse);
         }catch (Exception e){System.out.println("CouseControllerError");}
 
         Schedule schedule = new Schedule(AllCourse);//课程表

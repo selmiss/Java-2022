@@ -1,6 +1,7 @@
 package com.example.calendar.components.schedule;
 
 import com.example.calendar.components.CircleButton;
+import com.example.calendar.controller.CourseController;
 import com.example.calendar.controller.UpdateController;
 import com.example.calendar.utils.TimePicker;
 import javafx.event.Event;
@@ -43,7 +44,7 @@ public class Schedule extends AnchorPane {
     "第十二周","第十三周","第十四周","第十五周","第十六周","第十七周",
             "第十八周","第十九周","第二十周"};
     UpdateController updateController = new UpdateController();
-
+    CourseController courseController = new CourseController();
     Calendar nowCalendar = Calendar.getInstance();//当前时间
     Calendar startCalendar = Calendar.getInstance();//学期开始时间
 
@@ -180,6 +181,8 @@ public class Schedule extends AnchorPane {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files","*.xls","*.xlsx"));
             File excelFile = fileChooser.showOpenDialog(stage);
             updateController.update(excelFile);
+            allList = courseController.getAllCourseList();
+            courseController.courseAllRead(allList);
 
             int[] numarr={0,2,5,7,10,12};
             for(int i=0;i<6;i++)
