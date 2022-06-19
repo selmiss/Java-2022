@@ -8,10 +8,7 @@ import com.example.calendar.components.notes.NoteList;
 import com.example.calendar.components.schedule.Schedule;
 import com.example.calendar.components.todo.TodoDetail;
 import com.example.calendar.components.todo.TodoLists;
-import com.example.calendar.controller.CourseController;
-import com.example.calendar.controller.IdeaController;
-import com.example.calendar.controller.TodoItemController;
-import com.example.calendar.controller.UserOpController;
+import com.example.calendar.controller.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -74,6 +71,7 @@ public class HelloApplication extends Application {
     UserOpController userOpController = new UserOpController();
     IdeaController ideaController = new IdeaController();
     CourseController courseController = new CourseController();
+    WordAnalisys wordAnalisys = new WordAnalisys();
 
 
     /**
@@ -100,6 +98,10 @@ public class HelloApplication extends Application {
 
         AllIdea = ideaController.ReadIdeaList();//初始化idea list
         noteList = new NoteList(AllIdea);
+        /** test0 **/
+        String source_0="数学建模 ◇李卫国[1-16周]◇(三)204第1，2节";
+        System.out.println(wordAnalisys.Analysis(source_0).toString());
+
 
         /** 测试1 **/
         try{
