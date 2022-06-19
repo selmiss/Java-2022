@@ -130,7 +130,7 @@ public class Schedule extends AnchorPane {
         {
             for(int j=0;j<7;j++)
             {
-                String content= Alllist.get(0).get(i).get(j);
+                String content= Alllist.get(15).get(i).get(j);
                 if(content=="")
                     continue;
                 ScheduleItem Sitem = new ScheduleItem(j,numarr[i],2,content);
