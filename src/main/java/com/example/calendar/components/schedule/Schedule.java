@@ -125,12 +125,16 @@ public class Schedule extends AnchorPane {
             //dateLabel.setEffect(new InnerShadow(5,0,-1,Color.rgb(0,0,0,0.3)));
             gridPane.add(dateLabel,0,i,1,1);
         }
+        int[] numarr={0,2,5,7,10,12};
         for(int i=0;i<6;i++)
         {
             for(int j=0;j<7;j++)
             {
                 String content= Alllist.get(0).get(i).get(j);
-                ScheduleItem Sitem = new ScheduleItem(i,j,2,content);
+                if(content=="")
+                    continue;
+                ScheduleItem Sitem = new ScheduleItem(j,numarr[i],2,content);
+                System.out.println(numarr[i]);
                 gridPane.add(Sitem,Sitem.x+1,Sitem.y,1,Sitem.h);
             }
         }
