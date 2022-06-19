@@ -63,13 +63,6 @@ public class NoteList extends AnchorPane
                     notesBox.getChildren().remove(idea1);
                 }
             });
-            idea1.noteButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    userOpController.deleteIdea(i,idea_list);
-                    notesBox.getChildren().remove(idea1);
-                }
-            });
             notesBox.getChildren().add(idea1);
             noteStack.add(idea1);
         }
@@ -130,13 +123,13 @@ class Note extends AnchorPane{
 
         //已完成按钮
 
-        noteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/confirm/green.png");
+        noteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/note.png");
         noteButton.setLayoutX(20);
         noteButton.setLayoutY(10);
 
         //笔记标题
         Label title = new Label(idea.getTitle());
-        title.setLayoutY(10);
+        title.setLayoutY(15);
         title.setLayoutX(60);
         title.setMaxWidth(100);
         title.setAlignment(Pos.CENTER);
@@ -147,9 +140,21 @@ class Note extends AnchorPane{
         //内容简介
         String briefStr = idea.getContent();
         briefStr = briefStr.replace('#','\0');
-        briefStr=briefStr.split("\n")[0];
+        briefStr = briefStr.replace('`','\0');
+        String[] strs =  briefStr.split("\n");
+        System.out.println(strs);
+        briefStr = "";
+        int maxline=3;
+        for(int i=0;i<maxline&&i<strs.length;i++)
+        {
+            if(strs[i].equals("")){
+                maxline++;
+                continue;
+            }
+            briefStr += strs[i]+"\n";
+        }
         Label brief = new Label(briefStr);
-        brief.setLayoutY(30);
+        brief.setLayoutY(35);
         brief.setLayoutX(60);
         brief.setMaxWidth(100);
         brief.setAlignment(Pos.CENTER);
@@ -160,8 +165,7 @@ class Note extends AnchorPane{
 
 
         //删除按钮
-
-            deleteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/delete/green.png");
+        deleteButton = new CircleButton("file:src/main/resources/com/example/calendar/images/delete/green.png");
         deleteButton.setLayoutX(240);
         deleteButton.setLayoutY(10);
 

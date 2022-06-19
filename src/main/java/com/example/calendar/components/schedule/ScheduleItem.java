@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
  * @since 2022-6-14
  */
 public class ScheduleItem extends AnchorPane {
+    String[] colors = new String[]{"#FF9F9F","#8bc34a","#5C92E4","#E45C5C","#ce93d8","#ff6e40"};
     public int x,y,h;
     Label title = new Label();
     Label location = new Label();
@@ -23,7 +24,10 @@ public class ScheduleItem extends AnchorPane {
         this.x = x;
         this.y = y;
         this.h = h;
-        setBackground(new Background(new BackgroundFill(Color.valueOf("#FF9F9F"),new CornerRadii(8),new Insets(0,0,0,0))));
+
+        int cNum = (x+y*3+2*x*y)%6;
+
+        setBackground(new Background(new BackgroundFill(Color.valueOf(colors[cNum]),new CornerRadii(8),new Insets(0,0,0,0))));
         setPrefWidth(36);
         setPrefHeight(60*h);
         String Title = "";
