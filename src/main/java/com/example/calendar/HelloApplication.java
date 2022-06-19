@@ -125,6 +125,7 @@ public class HelloApplication extends Application {
 
              AllCourse = courseController.getAllCourseList();
             courseController.courseAllRead(AllCourse);
+            courseController.courseAllWrite(AllCourse);
         }catch (Exception e){System.out.println("CouseControllerError");}
 
         Schedule schedule = new Schedule(AllCourse);//课程表
